@@ -129,4 +129,4 @@ Returns the top preferred encoding from a list of available encodings.
 
 # License
 
-MIT
+[MIT](http://www.opensource.org/licenses/MIT)
