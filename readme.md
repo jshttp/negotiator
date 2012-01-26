@@ -11,7 +11,7 @@ An HTTP content negotiator for node.js written in coffeescript.
     # The negotiator constructor receives a request object
     negotiator = new Negotiator(request)
 
-    # Let's say Accept header is 'text/html, application/*;q=0.2, image/jpeg';q=0.8
+    # Let's say Accept header is 'text/html, application/*;q=0.2, image/jpeg;q=0.8'
 
     negotiator.preferredMediaTypes()
     # -> ['text/html', 'application/*', 'image/jpeg']
@@ -30,7 +30,7 @@ You can check a working example at `examples/accept.coffee`.
 
 Returns an array of preferred media types ordered by priority from a list of available media types.
 
-`preferredMediaTyp(availableMediaType)`:
+`preferredMediaType(availableMediaType)`:
 
 Returns the top preferred media type from a list of available media types.
 
