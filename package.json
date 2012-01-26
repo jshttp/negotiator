@@ -1,0 +1,20 @@
+{
+  "name": "negotiator",
+  "description": "HTTP content negotiation",
+  "version": "0.1.0",
+  "author": "Federico Romero <federico.romero@outboxlabs.com>",
+  "author": "Federico Romero <federico.romero@outboxlabs.com>",
+  "engine": "node > 0.6",
+  "license": "MIT",
+  "main": "./lib/http-server",
+  "devDependencies": {
+    "nodeunit": "0.6.x",
+    "iconv": "1.1.x",
+    "gzip-buffer": "x.x.x"
+  },
+  "dependencies": {
+    "underscore": "1.2.x",
+    "coffee-script": "1.2.x"
+  },
+  "scripts": { "test": "nodeunit test" }
+}
