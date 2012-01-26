@@ -3,10 +3,13 @@
   "description": "HTTP content negotiation",
   "version": "0.1.0",
   "author": "Federico Romero <federico.romero@outboxlabs.com>",
-  "author": "Federico Romero <federico.romero@outboxlabs.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/federomero/negotiator.git"
+  },
+  "keywords": ["http", "content negotiation", "accept", "accept-language", "accept-encoding", "accept-charset"],
   "engine": "node > 0.6",
   "license": "MIT",
-  "main": "./lib/http-server",
   "devDependencies": {
     "nodeunit": "0.6.x",
     "iconv": "1.1.x",
