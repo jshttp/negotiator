@@ -2,8 +2,6 @@
 
 An HTTP content negotiator for node.js written in javascript.
 
-This is a port to JavaScript of <https://github.com/federomero/negotiator>.
-
 # Accept Negotiation
 
     Negotiator = require('negotiator')
