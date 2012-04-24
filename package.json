@@ -1,23 +1,30 @@
 {
-  "name": "negotiator",
-  "description": "HTTP content negotiation",
-  "version": "0.1.0",
-  "author": "Federico Romero <federico.romero@outboxlabs.com>",
+  "name": "negotiator.js",
+  "description": "HTTP content negotiation (js fork of negotiator)",
+  "version": "0.2.2",
   "repository": {
     "type": "git",
-    "url": "https://github.com/federomero/negotiator.git"
+    "url": "git://github.com/isaacs/negotiator.js.git"
   },
-  "keywords": ["http", "content negotiation", "accept", "accept-language", "accept-encoding", "accept-charset"],
-  "engine": "node > 0.6",
+  "keywords": [
+    "http",
+    "content negotiation",
+    "accept",
+    "accept-language",
+    "accept-encoding",
+    "accept-charset"
+  ],
+  "engine": "node >= 0.6",
   "license": "MIT",
   "devDependencies": {
-    "nodeunit": "0.6.x",
-    "iconv": "1.1.x",
-    "gzip-buffer": "x.x.x"
+    "nodeunit": "0.6.x"
   },
-  "dependencies": {
-    "underscore": "1.2.x",
-    "coffee-script": "1.2.x"
+  "scripts": {
+    "test": "nodeunit test"
   },
-  "scripts": { "test": "nodeunit test" }
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "main": "lib/negotiator.js"
 }
