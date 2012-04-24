@@ -2,6 +2,8 @@
 
 An HTTP content negotiator for node.js written in javascript.
 
+This is a port to JavaScript of <https://github.com/federomero/negotiator>.
+
 # Accept Negotiation
 
     Negotiator = require('negotiator')
@@ -30,7 +32,7 @@ You can check a working example at `examples/accept.js`.
 
 Returns an array of preferred media types ordered by priority from a list of available media types.
 
-`preferredMediaTyp(availableMediaType)`:
+`preferredMediaType(availableMediaType)`:
 
 Returns the top preferred media type from a list of available media types.
 
@@ -67,7 +69,7 @@ Returns the top preferred language from a list of available languages.
 
 # Accept-Charset Negotiation
 
-    Negotiator = require('negotiator').Negotiator
+    Negotiator = require('negotiator')
 
     availableCharsets = ['utf-8', 'iso-8859-1', 'iso-8859-5']
 
