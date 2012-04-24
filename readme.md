@@ -1,17 +1,17 @@
 # Negotiator
 
-An HTTP content negotiator for node.js written in coffeescript.
+An HTTP content negotiator for node.js written in javascript.
 
 # Accept Negotiation
 
-    Negotiator = require('negotiator').Negotiator
+    Negotiator = require('negotiator')
 
     availableMediaTypes = ['text/html', 'text/plain', 'application/json']
 
     # The negotiator constructor receives a request object
     negotiator = new Negotiator(request)
 
-    # Let's say Accept header is 'text/html, application/*;q=0.2, image/jpeg;q=0.8'
+    # Let's say Accept header is 'text/html, application/*;q=0.2, image/jpeg';q=0.8
 
     negotiator.preferredMediaTypes()
     # -> ['text/html', 'application/*', 'image/jpeg']
@@ -22,7 +22,7 @@ An HTTP content negotiator for node.js written in coffeescript.
     negotiator.preferredLanguage(availableMediaTypes)
     # -> 'text/html'
 
-You can check a working example at `examples/accept.coffee`.
+You can check a working example at `examples/accept.js`.
 
 ## Methods
 
@@ -30,13 +30,13 @@ You can check a working example at `examples/accept.coffee`.
 
 Returns an array of preferred media types ordered by priority from a list of available media types.
 
-`preferredMediaType(availableMediaType)`:
+`preferredMediaTyp(availableMediaType)`:
 
 Returns the top preferred media type from a list of available media types.
 
 # Accept-Language Negotiation
 
-    Negotiator = require('negotiator').Negotiator
+    Negotiator = require('negotiator')
 
     negotiator = new Negotiator(request)
 
@@ -53,7 +53,7 @@ Returns the top preferred media type from a list of available media types.
     language = negotiator.preferredLanguage(availableLanguages)
     # -> 'es'
 
-You can check a working example at `examples/language.coffee`.
+You can check a working example at `examples/language.js`.
 
 ## Methods
 
@@ -84,7 +84,7 @@ Returns the top preferred language from a list of available languages.
     negotiator.preferredCharset(availableCharsets)
     # -> 'utf-8'
 
-You can check a working example at `examples/charset.coffee`.
+You can check a working example at `examples/charset.js`.
 
 ## Methods
 
@@ -115,7 +115,7 @@ Returns the top preferred charset from a list of available charsets.
     negotiator.preferredEncoding(availableEncodings)
     # -> 'gzip'
 
-You can check a working example at `examples/encoding.coffee`.
+You can check a working example at `examples/encoding.js`.
 
 ## Methods
 
@@ -129,4 +129,4 @@ Returns the top preferred encoding from a list of available encodings.
 
 # License
 
-[MIT](http://www.opensource.org/licenses/MIT)
+MIT
