@@ -1,10 +1,12 @@
 {
-  "name": "negotiator.js",
-  "description": "HTTP content negotiation (js fork of negotiator)",
-  "version": "0.2.2",
+  "name": "negotiator",
+  "description": "HTTP content negotiation",
+  "version": "0.2.3",
+  "author": "Federico Romero <federico.romero@outboxlabs.com>",
+  "contributors": ["Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)"],
   "repository": {
     "type": "git",
-    "url": "git://github.com/isaacs/negotiator.js.git"
+    "url": "git://github.com/federomero/negotiator.git"
   },
   "keywords": [
     "http",
