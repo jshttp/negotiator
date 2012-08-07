@@ -8,19 +8,19 @@ An HTTP content negotiator for node.js written in javascript.
 
     availableMediaTypes = ['text/html', 'text/plain', 'application/json']
 
-    # The negotiator constructor receives a request object
+    // The negotiator constructor receives a request object
     negotiator = new Negotiator(request)
 
-    # Let's say Accept header is 'text/html, application/*;q=0.2, image/jpeg';q=0.8
+    // Let's say Accept header is 'text/html, application/*;q=0.2, image/jpeg';q=0.8
 
     negotiator.preferredMediaTypes()
-    # -> ['text/html', 'application/*', 'image/jpeg']
+    // -> ['text/html', 'application/*', 'image/jpeg']
 
     negotiator.preferredMediaTypes(availableMediaTypes)
-    # -> ['text/html', 'application.json']
+    // -> ['text/html', 'application.json']
 
     negotiator.preferredLanguage(availableMediaTypes)
-    # -> 'text/html'
+    // -> 'text/html'
 
 You can check a working example at `examples/accept.js`.
 
@@ -42,16 +42,16 @@ Returns the top preferred media type from a list of available media types.
 
     availableLanguages = 'en', 'es', 'fr'
 
-    # Let's say Accept-Language header is 'en;q=0.8, es, pt'
+    // Let's say Accept-Language header is 'en;q=0.8, es, pt'
 
     negotiator.preferredLanguages()
-    # -> ['es', 'pt', 'en']
+    // -> ['es', 'pt', 'en']
 
     negotiator.preferredLanguages(availableLanguages)
-    # -> ['es', 'en']
+    // -> ['es', 'en']
 
     language = negotiator.preferredLanguage(availableLanguages)
-    # -> 'es'
+    // -> 'es'
 
 You can check a working example at `examples/language.js`.
 
@@ -73,16 +73,16 @@ Returns the top preferred language from a list of available languages.
 
     negotiator = new Negotiator(request)
 
-    # Let's say Accept-Charset header is 'utf-8, iso-8859-1;q=0.8, utf-7;q=0.2'
+    // Let's say Accept-Charset header is 'utf-8, iso-8859-1;q=0.8, utf-7;q=0.2'
 
     negotiator.preferredCharsets()
-    # -> ['utf-8', 'iso-8859-1', 'utf-7']
+    // -> ['utf-8', 'iso-8859-1', 'utf-7']
 
     negotiator.preferredCharsets(availableCharsets)
-    # -> ['utf-8', 'iso-8859-1']
+    // -> ['utf-8', 'iso-8859-1']
 
     negotiator.preferredCharset(availableCharsets)
-    # -> 'utf-8'
+    // -> 'utf-8'
 
 You can check a working example at `examples/charset.js`.
 
@@ -104,16 +104,16 @@ Returns the top preferred charset from a list of available charsets.
 
     negotiator = new Negotiator(request)
 
-    # Let's say Accept-Encoding header is 'gzip, compress;q=0.2, identity;q=0.5'
+    // Let's say Accept-Encoding header is 'gzip, compress;q=0.2, identity;q=0.5'
 
     negotiator.preferredEncodings()
-    # -> ['gzip', 'identity', 'compress']
+    // -> ['gzip', 'identity', 'compress']
 
     negotiator.preferredEncodings(availableEncodings)
-    # -> ['gzip', 'identity']
+    // -> ['gzip', 'identity']
 
     negotiator.preferredEncoding(availableEncodings)
-    # -> 'gzip'
+    // -> 'gzip'
 
 You can check a working example at `examples/encoding.js`.
 
