@@ -36,6 +36,10 @@
       provided: ['compress'],
       selected: ['compress']
     }, {
+      accept: 'deflate',
+      provided: ['gzip', 'identity'],
+      selected: ['identity']
+    }, {
       accept: '*',
       provided: ['identity', 'gzip'],
       selected: ['identity', 'gzip']
