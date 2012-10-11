@@ -19,7 +19,7 @@ An HTTP content negotiator for node.js written in javascript.
     negotiator.preferredMediaTypes(availableMediaTypes)
     // -> ['text/html', 'application.json']
 
-    negotiator.preferredLanguage(availableMediaTypes)
+    negotiator.preferredMediaType(availableMediaTypes)
     // -> 'text/html'
 
 You can check a working example at `examples/accept.js`.
