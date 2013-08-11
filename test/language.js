@@ -55,6 +55,10 @@
       accept: 'en-US;q=0.8, es',
       provided: ['en', 'es'],
       selected: ['es', 'en']
+    }, {
+      accept: 'en-US;q=0.8, es',
+      provided: null,
+      selected: ['es', 'en-US']
     }
   ];
 

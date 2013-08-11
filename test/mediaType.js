@@ -55,6 +55,10 @@
       accept: 'application/json;q=0.2, text/html',
       provided: ['application/json', 'text/html'],
       selected: ['text/html', 'application/json']
+    }, {
+      accept: 'application/json;q=0.2, text/html',
+      provided: null,
+      selected: ['text/html', 'application/json']
     }
   ];
 
