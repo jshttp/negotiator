@@ -19,6 +19,16 @@
     return test.done();
   };
 
+  this["Should not return identity encoding if * has q = 0"] = function(test) {
+    test.ok(preferredEncodings('*;q=0').indexOf('identity') === -1);
+    return test.done();
+  };
+
+  this["Should not return identity encoding if * has q = 0 but identity explicitly has q > 0"] = function(test) {
+    test.ok(preferredEncodings('*;q=0, identity;q=0.5').indexOf('identity') !== -1);
+    return test.done();
+  };
+
   testCorrectEncoding = function(c) {
     return _this["Should return " + c.selected + " for accept-encoding header " + c.accept + " with provided encoding " + c.provided] = function(test) {
       test.deepEqual(preferredEncodings(c.accept, c.provided), c.selected);
