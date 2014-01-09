@@ -28,9 +28,9 @@
       var encoding, negotiator;
       negotiator = new Negotiator(req);
       console.log("Accept-Encoding: " + req.headers['accept-encoding']);
-      console.log("Preferred: " + (negotiator.preferredEncodings()));
-      console.log("Possible: " + (negotiator.preferredEncodings(availableEncodings)));
-      encoding = negotiator.preferredEncoding(availableEncodings);
+      console.log("Preferred: " + (negotiator.encodings()));
+      console.log("Possible: " + (negotiator.encodings(availableEncodings)));
+      encoding = negotiator.encoding(availableEncodings);
       console.log("Selected: " + encoding);
       if (encoding) {
         res.writeHead(200, {

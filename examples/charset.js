@@ -32,9 +32,9 @@
     var charset, negotiator;
     negotiator = new Negotiator(req);
     console.log("Accept-Charset: " + req.headers['accept-charset']);
-    console.log("Preferred: " + (negotiator.preferredCharsets()));
-    console.log("Possible: " + (negotiator.preferredCharsets(availableCharsets)));
-    charset = negotiator.preferredCharset(availableCharsets);
+    console.log("Preferred: " + (negotiator.charsets()));
+    console.log("Possible: " + (negotiator.charsets(availableCharsets)));
+    charset = negotiator.charset(availableCharsets);
     console.log("Selected: " + charset);
     if (charset) {
       res.writeHead(200, {

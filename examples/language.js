@@ -24,9 +24,9 @@
     var language, negotiator;
     negotiator = new Negotiator(req);
     console.log("Accept-Language: " + req.headers['accept-language']);
-    console.log("Preferred: " + (negotiator.preferredLanguages()));
-    console.log("Possible: " + (negotiator.preferredLanguages(availableLanguages)));
-    language = negotiator.preferredLanguage(availableLanguages);
+    console.log("Preferred: " + (negotiator.languages()));
+    console.log("Possible: " + (negotiator.languages(availableLanguages)));
+    language = negotiator.language(availableLanguages);
     console.log("Selected: " + language);
     if (language) {
       res.writeHead(200, {

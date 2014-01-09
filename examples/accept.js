@@ -27,9 +27,9 @@
     var mediaType, negotiator;
     negotiator = new Negotiator(req);
     console.log("Accept: " + req.headers['accept']);
-    console.log("Preferred: " + (negotiator.preferredMediaTypes()));
-    console.log("Possible: " + (negotiator.preferredMediaTypes(availableMediaTypes)));
-    mediaType = negotiator.preferredMediaType(availableMediaTypes);
+    console.log("Preferred: " + (negotiator.mediaTypes()));
+    console.log("Possible: " + (negotiator.mediaTypes(availableMediaTypes)));
+    mediaType = negotiator.mediaType(availableMediaTypes);
     console.log("Selected: " + mediaType);
     if (mediaType) {
       res.writeHead(200, {
