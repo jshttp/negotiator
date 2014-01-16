@@ -66,6 +66,10 @@
       provided: ['gzip', 'compress'],
       selected: ['compress', 'gzip']
     }, {
+      accept: '*, compress;q=0',
+      provided: ['gzip', 'compress'],
+      selected: ['gzip']
+    }, {
       accept: 'gzip;q=0.8, compress',
       provided: null,
       selected: ['compress', 'gzip', 'identity']
