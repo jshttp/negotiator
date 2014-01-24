@@ -67,6 +67,10 @@
       accept: 'text/*, text/html;q=0.5',
       provided: ['text/html', 'text/plain'],
       selected: ['text/plain', 'text/html']
+    }, {
+      accept: 'application/json, */*; q=0.01',
+      provided: ['text/html', 'application/json'],
+      selected: ['application/json', 'text/html']
     }
   ];
 
