@@ -1,4 +1,4 @@
-# Negotiator
+# Negotiator [![Build Status](https://travis-ci.org/federomero/negotiator.png)](https://travis-ci.org/federomero/negotiator)
 
 An HTTP content negotiator for node.js written in javascript.
 
