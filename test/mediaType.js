@@ -19,6 +19,13 @@
     return test.done();
   };
 
+  this["Should handle extra slashes on query params"] = function(test) {
+    var type = 'application/xhtml+xml;profile="http://www.wapforum.org/xhtml"'
+    test.deepEqual(preferredMediaTypes(type, ['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"']), ['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"']);
+
+    return test.done();
+  };
+
   testCorrectType = function(c) {
     return _this["Should return " + c.selected + " for access header " + c.accept + " with provided types " + c.provided] = function(test) {
       test.deepEqual(preferredMediaTypes(c.accept, c.provided), c.selected);
