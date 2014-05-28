@@ -38,6 +38,10 @@
 
   testConfigurations = [
     {
+      accept: undefined,
+      provided: ['identity', 'gzip'],
+      selected: ['identity']
+    }, {
       accept: 'gzip',
       provided: ['identity', 'gzip'],
       selected: ['gzip', 'identity']

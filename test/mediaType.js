@@ -35,6 +35,10 @@
 
   testConfigurations = [
     {
+      accept: undefined,
+      provided: ['text/html'],
+      selected: ['text/html']
+    }, {
       accept: 'text/html',
       provided: ['text/html'],
       selected: ['text/html']

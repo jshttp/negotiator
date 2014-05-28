@@ -28,6 +28,10 @@
 
   testConfigurations = [
     {
+      accept: undefined,
+      provided: ['en'],
+      selected: ['en']
+    }, {
       accept: 'en',
       provided: ['en'],
       selected: ['en']
