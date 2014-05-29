@@ -28,6 +28,10 @@
 
   testConfigurations = [
     {
+      accept: undefined,
+      provided: ['utf-8'],
+      selected: ['utf-8']
+    }, {
       accept: 'utf-8',
       provided: ['utf-8'],
       selected: ['utf-8']
