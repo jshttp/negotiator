@@ -1,7 +1,7 @@
 {
   "name": "negotiator",
   "description": "HTTP content negotiation",
-  "version": "0.4.4",
+  "version": "0.4.3",
   "author": "Federico Romero <federico.romero@outboxlabs.com>",
   "contributors": ["Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)"],
   "repository": {
