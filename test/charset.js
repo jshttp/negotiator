@@ -59,6 +59,10 @@
       accept: '*, utf-8;q=0',
       provided: ['utf-8', 'ISO-8859-1'],
       selected: ['ISO-8859-1']
+    }, {
+      accept : '*, utf-8',
+      provided: ['utf-8', 'ISO-8859-1' ],
+      selected: ['utf-8', 'ISO-8859-1' ]
     }
   ];
 
