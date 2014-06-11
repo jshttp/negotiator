@@ -110,6 +110,10 @@
       accept : 'text/*;q=0.3, text/html;q=0.7, text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5',
       provided : ['text/html;level=1', 'text/html', 'text/html;level=3', 'image/jpeg', 'text/html;level=2', 'text/plain'],
       selected : ['text/html;level=1', 'text/html', 'text/html;level=3', 'image/jpeg', 'text/html;level=2', 'text/plain']
+    }, {
+      accept: 'text/html, application/xhtml+xml, */*',
+      provided: ['application/json', 'text/html'],
+      selected: ['text/html', 'application/json']
     }
 
   ];
