@@ -71,6 +71,10 @@
       accept: '*, en',
       provided: ['es', 'en'],
       selected: ['en', 'es']
+    }, {
+      accept: 'en',
+      provided: ['en', ''],
+      selected: ['en']
     }
   ];
 
