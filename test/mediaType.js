@@ -114,6 +114,10 @@
       accept : 'text/html, application/xhtml+xml, */*',
       provided : ['application/json', 'text/html'],
       selected : ['text/html', 'application/json' ]
+    }, {
+      accept : 'text/html, application/json',
+      provided : ['text/html', 'boom'],
+      selected : ['text/html']
     }
 
   ];
