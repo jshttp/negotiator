@@ -6,7 +6,7 @@
   "contributors": ["Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)"],
   "repository": {
     "type": "git",
-    "url": "git://github.com/federomero/negotiator.git"
+    "url": "git://github.com/jshttp/negotiator.git"
   },
   "keywords": [
     "http",
