@@ -19,10 +19,12 @@
   "engine": "node >= 0.6",
   "license": "MIT",
   "devDependencies": {
+    "istanbul": "~0.3.2",
     "nodeunit": "0.8.x"
   },
   "scripts": {
-    "test": "nodeunit test"
+    "test": "nodeunit test",
+    "test-cov": "istanbul cover nodeunit test"
   },
   "optionalDependencies": {},
   "engines": {
