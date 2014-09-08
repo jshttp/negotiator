@@ -28,5 +28,9 @@
   "engines": {
     "node": "*"
   },
-  "main": "lib/negotiator.js"
+  "main": "lib/negotiator.js",
+  "files": [
+    "lib",
+    "LICENSE"
+  ]
 }
