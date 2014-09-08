@@ -1,4 +1,10 @@
-# Negotiator [![Build Status](https://travis-ci.org/federomero/negotiator.png)](https://travis-ci.org/federomero/negotiator)
+# Negotiator
+
+[![NPM Version](https://img.shields.io/npm/v/negotiator.svg?style=flat)](https://www.npmjs.org/package/negotiator)
+[![NPM Downloads](https://img.shields.io/npm/dm/negotiator.svg?style=flat)](https://www.npmjs.org/package/negotiator)
+[![Node.js Version](https://img.shields.io/badge/node.js->=_0.8-brightgreen.svg?style=flat)](http://nodejs.org/download/)
+[![Build Status](http://img.shields.io/travis/jshttp/negotiator.svg?style=flat)](https://travis-ci.org/jshttp/negotiator)
+[![Coverage Status](https://img.shields.io/coveralls/jshttp/negotiator.svg?style=flat)](https://coveralls.io/r/jshttp/negotiator)
 
 An HTTP content negotiator for node.js written in javascript.
 
