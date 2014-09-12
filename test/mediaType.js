@@ -118,6 +118,10 @@
       accept : 'text/html, application/json',
       provided : ['text/html', 'boom'],
       selected : ['text/html']
+    }, {
+      accept: 'application/json;q=0.9, text/html;q=0.8, application/json;q=0.7',
+      provided: ['application/json', 'text/html'],
+      selected: ['application/json', 'text/html']
     }
 
   ];
