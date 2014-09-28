@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "nodeunit test",
-    "test-cov": "istanbul cover nodeunit test"
+    "test-cov": "istanbul cover ./node_modules/nodeunit/bin/nodeunit test"
   },
   "engines": {
     "node": ">= 0.6"
