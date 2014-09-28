@@ -4,6 +4,21 @@
 
   preferredLanguages = require('../lib/language').preferredLanguages;
 
+  this["Should return list of languages in order"] = function(test) {
+    test.deepEqual(preferredLanguages('nl;q=0.5,fr,de,en,it,es,pt,no,se,fi'), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'nl']);
+    return test.done();
+  };
+
+  this["Should return list of languages in order (large list)"] = function(test) {
+    test.deepEqual(preferredLanguages('nl;q=0.5,fr,de,en,it,es,pt,no,se,fi,ro'), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl']);
+    return test.done();
+  };
+
+  this["Should return list of languages"] = function(test) {
+    test.deepEqual(preferredLanguages('nl;q=0.5,fr,de,en,it,es,pt,no,se,fi'), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'nl']);
+    return test.done();
+  };
+
   this["Should not return a language when no is provided"] = function(test) {
     test.deepEqual(preferredLanguages('*', []), []);
     return test.done();
