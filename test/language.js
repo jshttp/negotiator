@@ -19,6 +19,11 @@
     return test.done();
   };
 
+  this["Should be case insensitive"] = function(test) {
+    test.deepEqual(preferredLanguages('en-us', ['en-US']), ['en-US']);
+    return test.done();
+  };
+
   testCorrectType = function(c) {
     return _this["Should return " + c.selected + " for accept-language header " + c.accept + " with provided language " + c.provided] = function(test) {
       test.deepEqual(preferredLanguages(c.accept, c.provided), c.selected);

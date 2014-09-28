@@ -26,6 +26,12 @@
     return test.done();
   };
 
+  this["Should be case insensitive"] = function(test) {
+    test.deepEqual(preferredMediaTypes('application/JSON', ['application/json']), ['application/json']);
+    return test.done();
+  };
+
+
   testCorrectType = function(c) {
     return _this["Should return " + c.selected + " for access header " + c.accept + " with provided types " + c.provided] = function(test) {
       test.deepEqual(preferredMediaTypes(c.accept, c.provided), c.selected);
