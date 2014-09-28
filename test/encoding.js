@@ -29,6 +29,11 @@
     return test.done();
   };
 
+  this["Should be case insensitive"] = function(test) {
+    test.deepEqual(preferredEncodings('IDENTITY', ['identity']), ['identity']);
+    return test.done();
+  };
+
   testCorrectEncoding = function(c) {
     return _this["Should return " + c.selected + " for accept-encoding header " + c.accept + " with provided encoding " + c.provided] = function(test) {
       test.deepEqual(preferredEncodings(c.accept, c.provided), c.selected);

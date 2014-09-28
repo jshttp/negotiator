@@ -19,6 +19,11 @@
     return test.done();
   };
 
+  this["Should be case insensitive"] = function(test) {
+    test.deepEqual(preferredCharsets('iso-8859-1', ['ISO-8859-1']), ['ISO-8859-1']);
+    return test.done();
+  };
+
   testCorrectCharset = function(c) {
     return _this["Should return " + c.selected + " for accept-charset header " + c.accept + " with provided charset " + c.provided] = function(test) {
       test.deepEqual(preferredCharsets(c.accept, c.provided), c.selected);
