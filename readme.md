@@ -133,6 +133,6 @@ Returns an array of preferred encodings ordered by priority from a list of avail
 
 Returns the top preferred encoding from a list of available encodings.
 
-# License
+## License
 
-MIT
+[MIT](LICENSE)
