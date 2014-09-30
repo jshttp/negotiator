@@ -14,11 +14,6 @@
     return test.done();
   };
 
-  this["Should return list of languages"] = function(test) {
-    test.deepEqual(preferredLanguages('nl;q=0.5,fr,de,en,it,es,pt,no,se,fi'), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'nl']);
-    return test.done();
-  };
-
   this["Should not return a language when no is provided"] = function(test) {
     test.deepEqual(preferredLanguages('*', []), []);
     return test.done();
