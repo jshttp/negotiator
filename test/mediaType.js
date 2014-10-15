@@ -49,6 +49,10 @@
       provided: ['text/html'],
       selected: ['text/html']
     }, {
+      accept: 'text/html;level',
+      provided: ['text/html'],
+      selected: ['text/html']
+    }, {
       accept: '*/*',
       provided: ['text/html'],
       selected: ['text/html']
