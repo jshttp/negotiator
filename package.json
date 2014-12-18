@@ -15,7 +15,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "istanbul": "~0.3.2",
+    "istanbul": "0.3.5",
     "nodeunit": "0.8.x"
   },
   "scripts": {
