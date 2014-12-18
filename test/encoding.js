@@ -10,6 +10,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.encodings(), ['identity']);
+    test.strictEqual(negotiator.encoding(), 'identity');
 
     return test.done();
   };
@@ -19,6 +20,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.encodings(), ['gzip', 'identity']);
+    test.strictEqual(negotiator.encoding(), 'gzip');
 
     return test.done();
   };
@@ -28,6 +30,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.encodings(), []);
+    test.strictEqual(negotiator.encoding(), undefined);
 
     return test.done();
   };
@@ -37,6 +40,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.encodings(), []);
+    test.strictEqual(negotiator.encoding(), undefined);
 
     return test.done();
   };
@@ -46,6 +50,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.encodings(), ['identity']);
+    test.strictEqual(negotiator.encoding(), 'identity');
 
     return test.done();
   };
@@ -55,6 +60,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.encodings(['identity']), ['identity']);
+    test.strictEqual(negotiator.encoding(['identity']), 'identity');
 
     return test.done();
   };
@@ -65,6 +71,7 @@ var Negotiator = require('..');
       var negotiator = new Negotiator(request);
 
       test.deepEqual(negotiator.encodings(c.provided), c.selected);
+      test.strictEqual(negotiator.encoding(c.provided), c.selected[0]);
 
       return test.done();
     };

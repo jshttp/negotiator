@@ -10,6 +10,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.charsets([]), []);
+    test.strictEqual(negotiator.charset([]), undefined);
 
     return test.done();
   };
@@ -19,6 +20,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.charsets(['utf-8']), []);
+    test.strictEqual(negotiator.charset(['utf-8']), undefined);
 
     return test.done();
   };
@@ -28,6 +30,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.charsets(['utf-8']), []);
+    test.strictEqual(negotiator.charset(['utf-8']), undefined);
 
     return test.done();
   };
@@ -37,6 +40,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.charsets(['ISO-8859-1']), ['ISO-8859-1']);
+    test.strictEqual(negotiator.charset(['ISO-8859-1']), 'ISO-8859-1');
 
     return test.done();
   };
@@ -47,6 +51,7 @@ var Negotiator = require('..');
       var negotiator = new Negotiator(request);
 
       test.deepEqual(negotiator.charsets(c.provided), c.selected);
+      test.strictEqual(negotiator.charset(c.provided), c.selected[0]);
 
       return test.done();
     };

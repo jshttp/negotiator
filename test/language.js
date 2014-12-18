@@ -10,6 +10,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.languages(), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'nl']);
+    test.strictEqual(negotiator.language(), 'fr');
 
     return test.done();
   };
@@ -19,6 +20,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.languages(), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl']);
+    test.strictEqual(negotiator.language(), 'fr');
 
     return test.done();
   };
@@ -28,6 +30,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.languages([]), []);
+    test.strictEqual(negotiator.language([]), undefined);
 
     return test.done();
   };
@@ -37,6 +40,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.languages(['es']), []);
+    test.strictEqual(negotiator.language(['es']), undefined);
 
     return test.done();
   };
@@ -46,6 +50,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.languages(['en']), []);
+    test.strictEqual(negotiator.language(['en']), undefined);
 
     return test.done();
   };
@@ -55,6 +60,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.languages(['en-US']), ['en-US']);
+    test.strictEqual(negotiator.language(['en-US']), 'en-US');
 
     return test.done();
   };
@@ -65,6 +71,7 @@ var Negotiator = require('..');
       var negotiator = new Negotiator(request);
 
       test.deepEqual(negotiator.languages(c.provided), c.selected);
+      test.strictEqual(negotiator.language(c.provided), c.selected[0]);
 
       return test.done();
     };

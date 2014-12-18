@@ -10,6 +10,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.mediaTypes([]), []);
+    test.strictEqual(negotiator.mediaType([]), undefined);
 
     return test.done();
   };
@@ -19,6 +20,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.mediaTypes(['text/html']), []);
+    test.strictEqual(negotiator.mediaType(['text/html']), undefined);
 
     return test.done();
   };
@@ -28,6 +30,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.mediaTypes(['text/html']), []);
+    test.strictEqual(negotiator.mediaType(['text/html']), undefined);
 
     return test.done();
   };
@@ -37,6 +40,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.mediaTypes(['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"']), ['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"']);
+    test.strictEqual(negotiator.mediaType(['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"']), 'application/xhtml+xml;profile="http://www.wapforum.org/xhtml"');
 
     return test.done();
   };
@@ -46,6 +50,7 @@ var Negotiator = require('..');
     var negotiator = new Negotiator(request);
 
     test.deepEqual(negotiator.mediaTypes(['application/json']), ['application/json']);
+    test.strictEqual(negotiator.mediaType(['application/json']), 'application/json');
 
     return test.done();
   };
@@ -57,6 +62,7 @@ var Negotiator = require('..');
       var negotiator = new Negotiator(request);
 
       test.deepEqual(negotiator.mediaTypes(c.provided), c.selected);
+      test.strictEqual(negotiator.mediaType(c.provided), c.selected[0]);
 
       return test.done();
     };
