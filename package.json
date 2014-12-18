@@ -25,9 +25,9 @@
   "engines": {
     "node": ">= 0.6"
   },
-  "main": "lib/negotiator.js",
   "files": [
-    "lib",
-    "LICENSE"
+    "lib/",
+    "LICENSE",
+    "index.js"
   ]
 }
