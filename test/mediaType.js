@@ -1,40 +1,63 @@
+
+var Negotiator = require('..');
+
 (function() {
-  var configuration, preferredMediaTypes, testConfigurations, testCorrectType, _i, _len,
+  var configuration, testConfigurations, testCorrectType, _i, _len,
     _this = this;
 
-  preferredMediaTypes = require('../lib/mediaType').preferredMediaTypes;
-
   this["Should not return a media type when no media type provided"] = function(test) {
-    test.deepEqual(preferredMediaTypes('*/*', []), []);
+    var request = createRequest({Accept: '*/*'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.mediaTypes([]), []);
+
     return test.done();
   };
 
   this["Should not return a media type when no media type is acceptable"] = function(test) {
-    test.deepEqual(preferredMediaTypes('application/json', ['text/html']), []);
+    var request = createRequest({Accept: 'application/json'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.mediaTypes(['text/html']), []);
+
     return test.done();
   };
 
   this["Should not return a media type with q = 0"] = function(test) {
-    test.deepEqual(preferredMediaTypes('text/html;q=0', ['text/html']), []);
+    var request = createRequest({Accept: 'text/html;q=0'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.mediaTypes(['text/html']), []);
+
     return test.done();
   };
 
   this["Should handle extra slashes on query params"] = function(test) {
-    var type = 'application/xhtml+xml;profile="http://www.wapforum.org/xhtml"'
-    test.deepEqual(preferredMediaTypes(type, ['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"']), ['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"']);
+    var request = createRequest({Accept: 'application/xhtml+xml;profile="http://www.wapforum.org/xhtml"'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.mediaTypes(['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"']), ['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"']);
 
     return test.done();
   };
 
   this["Should be case insensitive"] = function(test) {
-    test.deepEqual(preferredMediaTypes('application/JSON', ['application/json']), ['application/json']);
+    var request = createRequest({Accept: 'application/JSON'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.mediaTypes(['application/json']), ['application/json']);
+
     return test.done();
   };
 
 
   testCorrectType = function(c) {
     return _this["Should return " + c.selected + " for access header " + c.accept + " with provided types " + c.provided] = function(test) {
-      test.deepEqual(preferredMediaTypes(c.accept, c.provided), c.selected);
+      var request = createRequest({Accept: c.accept});
+      var negotiator = new Negotiator(request);
+
+      test.deepEqual(negotiator.mediaTypes(c.provided), c.selected);
+
       return test.done();
     };
   };
@@ -142,3 +165,15 @@
   }
 
 }).call(this);
+
+function createRequest(headers) {
+  var request = {
+    headers: {}
+  };
+
+  Object.keys(headers).forEach(function (key) {
+    request.headers[key.toLowerCase()] = headers[key];
+  })
+
+  return request;
+}

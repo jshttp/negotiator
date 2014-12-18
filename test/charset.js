@@ -1,32 +1,53 @@
+
+var Negotiator = require('..');
+
 (function() {
-  var configuration, preferredCharsets, testConfigurations, testCorrectCharset, _i, _len,
+  var configuration, testConfigurations, testCorrectCharset, _i, _len,
     _this = this;
 
-  preferredCharsets = require('../lib/charset').preferredCharsets;
-
   this["Should not return a charset when no charset is provided"] = function(test) {
-    test.deepEqual(preferredCharsets('*', []), []);
+    var request = createRequest({'Accept-Charset': '*'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.charsets([]), []);
+
     return test.done();
   };
 
   this["Should not return a charset when no charset is acceptable"] = function(test) {
-    test.deepEqual(preferredCharsets('ISO-8859-1', ['utf-8']), []);
+    var request = createRequest({'Accept-Charset': 'ISO-8859-1'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.charsets(['utf-8']), []);
+
     return test.done();
   };
 
   this["Should not return a charset with q = 0"] = function(test) {
-    test.deepEqual(preferredCharsets('utf-8;q=0', ['utf-8']), []);
+    var request = createRequest({'Accept-Charset': 'utf-8;q=0'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.charsets(['utf-8']), []);
+
     return test.done();
   };
 
   this["Should be case insensitive"] = function(test) {
-    test.deepEqual(preferredCharsets('iso-8859-1', ['ISO-8859-1']), ['ISO-8859-1']);
+    var request = createRequest({'Accept-Charset': 'iso-8859-1'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.charsets(['ISO-8859-1']), ['ISO-8859-1']);
+
     return test.done();
   };
 
   testCorrectCharset = function(c) {
     return _this["Should return " + c.selected + " for accept-charset header " + c.accept + " with provided charset " + c.provided] = function(test) {
-      test.deepEqual(preferredCharsets(c.accept, c.provided), c.selected);
+      var request = createRequest({'Accept-Charset': c.accept});
+      var negotiator = new Negotiator(request);
+
+      test.deepEqual(negotiator.charsets(c.provided), c.selected);
+
       return test.done();
     };
   };
@@ -81,3 +102,15 @@
   }
 
 }).call(this);
+
+function createRequest(headers) {
+  var request = {
+    headers: {}
+  };
+
+  Object.keys(headers).forEach(function (key) {
+    request.headers[key.toLowerCase()] = headers[key];
+  })
+
+  return request;
+}

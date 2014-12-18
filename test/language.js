@@ -1,42 +1,71 @@
+
+var Negotiator = require('..');
+
 (function() {
-  var configuration, preferredLanguages, testConfigurations, testCorrectType, _i, _len,
+  var configuration, testConfigurations, testCorrectType, _i, _len,
     _this = this;
 
-  preferredLanguages = require('../lib/language').preferredLanguages;
-
   this["Should return list of languages in order"] = function(test) {
-    test.deepEqual(preferredLanguages('nl;q=0.5,fr,de,en,it,es,pt,no,se,fi'), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'nl']);
+    var request = createRequest({'Accept-Language': 'nl;q=0.5,fr,de,en,it,es,pt,no,se,fi'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.languages(), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'nl']);
+
     return test.done();
   };
 
   this["Should return list of languages in order (large list)"] = function(test) {
-    test.deepEqual(preferredLanguages('nl;q=0.5,fr,de,en,it,es,pt,no,se,fi,ro'), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl']);
+    var request = createRequest({'Accept-Language': 'nl;q=0.5,fr,de,en,it,es,pt,no,se,fi,ro'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.languages(), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl']);
+
     return test.done();
   };
 
   this["Should not return a language when no is provided"] = function(test) {
-    test.deepEqual(preferredLanguages('*', []), []);
+    var request = createRequest({'Accept-Language': '*'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.languages([]), []);
+
     return test.done();
   };
 
   this["Should not return a language when no language is acceptable"] = function(test) {
-    test.deepEqual(preferredLanguages('en', ['es']), []);
+    var request = createRequest({'Accept-Language': 'en'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.languages(['es']), []);
+
     return test.done();
   };
 
   this["Should not return a language with q = 0"] = function(test) {
-    test.deepEqual(preferredLanguages('en;q=0', ['en']), []);
+    var request = createRequest({'Accept-Language': 'en;q=0'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.languages(['en']), []);
+
     return test.done();
   };
 
   this["Should be case insensitive"] = function(test) {
-    test.deepEqual(preferredLanguages('en-us', ['en-US']), ['en-US']);
+    var request = createRequest({'Accept-Language': 'en-us'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.languages(['en-US']), ['en-US']);
+
     return test.done();
   };
 
   testCorrectType = function(c) {
     return _this["Should return " + c.selected + " for accept-language header " + c.accept + " with provided language " + c.provided] = function(test) {
-      test.deepEqual(preferredLanguages(c.accept, c.provided), c.selected);
+      var request = createRequest({'Accept-Language': c.accept});
+      var negotiator = new Negotiator(request);
+
+      test.deepEqual(negotiator.languages(c.provided), c.selected);
+
       return test.done();
     };
   };
@@ -103,3 +132,15 @@
   }
 
 }).call(this);
+
+function createRequest(headers) {
+  var request = {
+    headers: {}
+  };
+
+  Object.keys(headers).forEach(function (key) {
+    request.headers[key.toLowerCase()] = headers[key];
+  })
+
+  return request;
+}

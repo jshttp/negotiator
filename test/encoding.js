@@ -1,42 +1,71 @@
+
+var Negotiator = require('..');
+
 (function() {
-  var configuration, preferredEncodings, testConfigurations, testCorrectEncoding, _i, _len,
+  var configuration, testConfigurations, testCorrectEncoding, _i, _len,
     _this = this;
 
-  preferredEncodings = require('../lib/encoding').preferredEncodings;
-
   this["Should return identity encoding when no encoding is provided"] = function(test) {
-    test.deepEqual(preferredEncodings(null), ['identity']);
+    var request = createRequest({});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.encodings(), ['identity']);
+
     return test.done();
   };
 
-  this["Should include the identity encoding even if not explicity listed"] = function(test) {
-    test.ok(preferredEncodings('gzip').indexOf('identity') !== -1);
+  this["Should include the identity encoding even if not explicitly listed"] = function(test) {
+    var request = createRequest({'Accept-Encoding': 'gzip'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.encodings(), ['gzip', 'identity']);
+
     return test.done();
   };
 
   this["Should not return identity encoding if q = 0"] = function(test) {
-    test.ok(preferredEncodings('identity;q=0').indexOf('identity') === -1);
+    var request = createRequest({'Accept-Encoding': 'identity;q=0'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.encodings(), []);
+
     return test.done();
   };
 
   this["Should not return identity encoding if * has q = 0"] = function(test) {
-    test.ok(preferredEncodings('*;q=0').indexOf('identity') === -1);
+    var request = createRequest({'Accept-Encoding': '*;q=0'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.encodings(), []);
+
     return test.done();
   };
 
   this["Should not return identity encoding if * has q = 0 but identity explicitly has q > 0"] = function(test) {
-    test.ok(preferredEncodings('*;q=0, identity;q=0.5').indexOf('identity') !== -1);
+    var request = createRequest({'Accept-Encoding': '*;q=0, identity;q=0.5'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.encodings(), ['identity']);
+
     return test.done();
   };
 
   this["Should be case insensitive"] = function(test) {
-    test.deepEqual(preferredEncodings('IDENTITY', ['identity']), ['identity']);
+    var request = createRequest({'Accept-Encoding': 'IDENTITY'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.encodings(['identity']), ['identity']);
+
     return test.done();
   };
 
   testCorrectEncoding = function(c) {
     return _this["Should return " + c.selected + " for accept-encoding header " + c.accept + " with provided encoding " + c.provided] = function(test) {
-      test.deepEqual(preferredEncodings(c.accept, c.provided), c.selected);
+      var request = createRequest({'Accept-Encoding': c.accept});
+      var negotiator = new Negotiator(request);
+
+      test.deepEqual(negotiator.encodings(c.provided), c.selected);
+
       return test.done();
     };
   };
@@ -99,3 +128,15 @@
   }
 
 }).call(this);
+
+function createRequest(headers) {
+  var request = {
+    headers: {}
+  };
+
+  Object.keys(headers).forEach(function (key) {
+    request.headers[key.toLowerCase()] = headers[key];
+  })
+
+  return request;
+}
