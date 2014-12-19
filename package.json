@@ -19,7 +19,7 @@
   "repository": "jshttp/negotiator",
   "devDependencies": {
     "istanbul": "0.3.5",
-    "nodeunit": "0.8.x"
+    "nodeunit": "0.9.0"
   },
   "files": [
     "lib/",
