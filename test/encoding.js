@@ -103,6 +103,10 @@ var Negotiator = require('..');
       provided: ['compress', 'identity'],
       selected: ['compress', 'identity']
     }, {
+      accept: 'gzip, compress;q=0',
+      provided: ['compress', 'identity'],
+      selected: ['identity']
+    }, {
       accept: 'gzip;q=0.8, identity;q=0.5, *;q=0.3',
       provided: ['identity', 'gzip', 'compress'],
       selected: ['gzip', 'identity', 'compress']
