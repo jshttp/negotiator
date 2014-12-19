@@ -25,6 +25,16 @@ var Negotiator = require('..');
     return test.done();
   };
 
+  this["Should return language desired (large list)"] = function(test) {
+    var request = createRequest({'Accept-Language': 'nl;q=0.5,fr,de,en,it,es,pt,no,se,fi,ro'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.languages(['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl']), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl']);
+    test.strictEqual(negotiator.language(['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl']), 'fr');
+
+    return test.done();
+  };
+
   this["Should not return a language when no is provided"] = function(test) {
     var request = createRequest({'Accept-Language': '*'});
     var negotiator = new Negotiator(request);
