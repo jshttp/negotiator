@@ -1,5 +1,5 @@
-unreleased
-==========
+0.5.0 / 2014-12-18
+==================
 
   * Fix list return order when large accepted list
   * Fix missing identity encoding when q=0 exists
