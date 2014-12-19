@@ -2,9 +2,12 @@
   "name": "negotiator",
   "description": "HTTP content negotiation",
   "version": "0.4.9",
-  "author": "Federico Romero <federico.romero@outboxlabs.com>",
-  "contributors": ["Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)"],
-  "repository": "jshttp/negotiator",
+  "contributors": [
+    "Douglas Christopher Wilson <doug@somethingdoug.com>",
+    "Federico Romero <federico.romero@outboxlabs.com>",
+    "Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)"
+  ],
+  "license": "MIT",
   "keywords": [
     "http",
     "content negotiation",
@@ -13,21 +16,21 @@
     "accept-encoding",
     "accept-charset"
   ],
-  "license": "MIT",
+  "repository": "jshttp/negotiator",
   "devDependencies": {
     "istanbul": "0.3.5",
     "nodeunit": "0.8.x"
-  },
-  "scripts": {
-    "test": "nodeunit test",
-    "test-cov": "istanbul cover ./node_modules/nodeunit/bin/nodeunit test"
-  },
-  "engines": {
-    "node": ">= 0.6"
   },
   "files": [
     "lib/",
     "LICENSE",
     "index.js"
-  ]
+  ],
+  "engines": {
+    "node": ">= 0.6"
+  },
+  "scripts": {
+    "test": "nodeunit test",
+    "test-cov": "istanbul cover ./node_modules/nodeunit/bin/nodeunit test"
+  }
 }
