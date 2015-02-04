@@ -5,6 +5,36 @@ var Negotiator = require('..');
   var configuration, testConfigurations, testCorrectType, _i, _len,
     _this = this;
 
+  this["Should return list of media types in order"] = function(test) {
+    var request = createRequest({Accept: '*/*'});
+    var negotiator = new Negotiator(request);
+
+    var mediaTypes = [
+      'text/javascript',
+      'application/javascript',
+      'application/x-javascript',
+      'text/json',
+      'text/x-json',
+      'application/json',
+      'application/x-json',
+      'text/xml',
+      'application/xml',
+      'application/x-xml',
+      'text/html',
+      'application/xhtml+xml',
+      'text/yaml',
+      'text/x-yaml',
+      'application/yaml',
+      'application/x-yaml',
+      'text/plain'
+    ];
+
+    test.deepEqual(negotiator.mediaTypes(mediaTypes), mediaTypes);
+    test.strictEqual(negotiator.mediaType(mediaTypes), 'text/javascript');
+
+    return test.done();
+  };
+
   this["Should not return a media type when no media type provided"] = function(test) {
     var request = createRequest({Accept: '*/*'});
     var negotiator = new Negotiator(request);
