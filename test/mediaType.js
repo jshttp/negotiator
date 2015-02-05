@@ -5,6 +5,36 @@ var Negotiator = require('..');
   var configuration, testConfigurations, testCorrectType, _i, _len,
     _this = this;
 
+  this["Should return list of media types in order"] = function(test) {
+    var request = createRequest({Accept: 'text/plain, application/json;q=0.5, text/html, */*;q=0.1'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.mediaTypes(), ['text/plain', 'text/html', 'application/json', '*/*']);
+    test.strictEqual(negotiator.mediaType(), 'text/plain');
+
+    return test.done();
+  };
+
+  this["Should return list of media types in order (large list)"] = function(test) {
+    var request = createRequest({Accept: 'text/plain, application/json;q=0.5, text/html, text/xml, text/yaml, text/javascript, text/csv, text/css, text/rtf, text/markdown, */*;q=0.1'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.mediaTypes(), ['text/plain', 'text/html', 'text/xml', 'text/yaml', 'text/javascript', 'text/csv', 'text/css', 'text/rtf', 'text/markdown', 'application/json', '*/*']);
+    test.strictEqual(negotiator.mediaType(), 'text/plain');
+
+    return test.done();
+  };
+
+  this["Should return media type desired (large list)"] = function(test) {
+    var request = createRequest({Accept: 'text/plain, application/json;q=0.5, text/html, text/xml, text/yaml, text/javascript, text/csv, text/css, text/rtf, text/markdown, application/octet-stream;q=0.1'});
+    var negotiator = new Negotiator(request);
+
+    test.deepEqual(negotiator.mediaTypes(['text/plain', 'text/html', 'text/xml', 'text/yaml', 'text/javascript', 'text/csv', 'text/css', 'text/rtf', 'text/markdown', 'application/json', 'application/octet-stream']), ['text/plain', 'text/html', 'text/xml', 'text/yaml', 'text/javascript', 'text/csv', 'text/css', 'text/rtf', 'text/markdown', 'application/json', 'application/octet-stream']);
+    test.strictEqual(negotiator.mediaType(['text/plain', 'text/html', 'text/xml', 'text/yaml', 'text/javascript', 'text/csv', 'text/css', 'text/rtf', 'text/markdown', 'application/json', 'application/octet-stream']), 'text/plain');
+
+    return test.done();
+  };
+
   this["Should not return a media type when no media type provided"] = function(test) {
     var request = createRequest({Accept: '*/*'});
     var negotiator = new Negotiator(request);
