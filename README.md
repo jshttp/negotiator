@@ -44,13 +44,14 @@ You can check a working example at `examples/accept.js`.
 
 #### Methods
 
-##### mediaTypes(availableMediaTypes):
+##### mediaTypes(availableMediaTypes)
 
-Returns an array of preferred media types ordered by priority from a list of available media types.
+Returns an array of preferred media types ordered by priority from a list of
+available media types.
 
-##### mediaType(availableMediaType):
+##### mediaType(availableMediaType)
 
-Returns the top preferred media type from a list of available media types.
+Returns the most preferred media type from a list of available media types.
 
 ### Accept-Language Negotiation
 
@@ -75,13 +76,14 @@ You can check a working example at `examples/language.js`.
 
 #### Methods
 
-##### languages(availableLanguages):
+##### languages(availableLanguages)
 
-Returns an array of preferred languages ordered by priority from a list of available languages.
+Returns an array of preferred languages ordered by priority from a list of
+available languages.
 
-##### language(availableLanguages):
+##### language(availableLanguages)
 
-Returns the top preferred language from a list of available languages.
+Returns the most preferred language from a list of available languages.
 
 ### Accept-Charset Negotiation
 
@@ -106,13 +108,14 @@ You can check a working example at `examples/charset.js`.
 
 #### Methods
 
-##### charsets(availableCharsets):
+##### charsets(availableCharsets)
 
-Returns an array of preferred charsets ordered by priority from a list of available charsets.
+Returns an array of preferred charsets ordered by priority from a list of
+available charsets.
 
-##### charset(availableCharsets):
+##### charset(availableCharsets)
 
-Returns the top preferred charset from a list of available charsets.
+Returns the most preferred charset from a list of available charsets.
 
 ### Accept-Encoding Negotiation
 
@@ -137,13 +140,14 @@ You can check a working example at `examples/encoding.js`.
 
 #### Methods
 
-##### encodings(availableEncodings):
+##### encodings(availableEncodings)
 
-Returns an array of preferred encodings ordered by priority from a list of available encodings.
+Returns an array of preferred encodings ordered by priority from a list of
+available encodings.
 
-##### encoding(availableEncodings):
+##### encoding(availableEncodings)
 
-Returns the top preferred encoding from a list of available encodings.
+Returns the most preferred encoding from a list of available encodings.
 
 ## License
 
