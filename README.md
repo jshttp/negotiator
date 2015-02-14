@@ -185,13 +185,13 @@ available encodings.
 
 [MIT](LICENSE)
 
-[npm-image]: https://img.shields.io/npm/v/negotiator.svg?style=flat
+[npm-image]: https://img.shields.io/npm/v/negotiator.svg
 [npm-url]: https://npmjs.org/package/negotiator
-[node-version-image]: https://img.shields.io/node/v/negotiator.svg?style=flat
+[node-version-image]: https://img.shields.io/node/v/negotiator.svg
 [node-version-url]: http://nodejs.org/download/
-[travis-image]: https://img.shields.io/travis/jshttp/negotiator.svg?style=flat
+[travis-image]: https://img.shields.io/travis/jshttp/negotiator/master.svg
 [travis-url]: https://travis-ci.org/jshttp/negotiator
-[coveralls-image]: https://img.shields.io/coveralls/jshttp/negotiator.svg?style=flat
+[coveralls-image]: https://img.shields.io/coveralls/jshttp/negotiator/master.svg
 [coveralls-url]: https://coveralls.io/r/jshttp/negotiator?branch=master
-[downloads-image]: https://img.shields.io/npm/dm/negotiator.svg?style=flat
+[downloads-image]: https://img.shields.io/npm/dm/negotiator.svg
 [downloads-url]: https://npmjs.org/package/negotiator
