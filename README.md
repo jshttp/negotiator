@@ -44,14 +44,22 @@ You can check a working example at `examples/accept.js`.
 
 #### Methods
 
-##### mediaTypes(availableMediaTypes)
+##### mediaType()
 
-Returns an array of preferred media types ordered by priority from a list of
-available media types.
+Returns the most preferred media type from the client.
 
 ##### mediaType(availableMediaType)
 
 Returns the most preferred media type from a list of available media types.
+
+##### mediaTypes()
+
+Returns an array of preferred media types ordered by the client preference.
+
+##### mediaTypes(availableMediaTypes)
+
+Returns an array of preferred media types ordered by priority from a list of
+available media types.
 
 ### Accept-Language Negotiation
 
@@ -76,14 +84,22 @@ You can check a working example at `examples/language.js`.
 
 #### Methods
 
-##### languages(availableLanguages)
+##### language()
 
-Returns an array of preferred languages ordered by priority from a list of
-available languages.
+Returns the most preferred language from the client.
 
 ##### language(availableLanguages)
 
 Returns the most preferred language from a list of available languages.
+
+##### languages()
+
+Returns an array of preferred languages ordered by the client preference.
+
+##### languages(availableLanguages)
+
+Returns an array of preferred languages ordered by priority from a list of
+available languages.
 
 ### Accept-Charset Negotiation
 
@@ -108,14 +124,22 @@ You can check a working example at `examples/charset.js`.
 
 #### Methods
 
-##### charsets(availableCharsets)
+##### charset()
 
-Returns an array of preferred charsets ordered by priority from a list of
-available charsets.
+Returns the most preferred charset from the client.
 
 ##### charset(availableCharsets)
 
 Returns the most preferred charset from a list of available charsets.
+
+##### charsets()
+
+Returns an array of preferred charsets ordered by the client preference.
+
+##### charsets(availableCharsets)
+
+Returns an array of preferred charsets ordered by priority from a list of
+available charsets.
 
 ### Accept-Encoding Negotiation
 
@@ -140,14 +164,22 @@ You can check a working example at `examples/encoding.js`.
 
 #### Methods
 
-##### encodings(availableEncodings)
+##### encoding()
 
-Returns an array of preferred encodings ordered by priority from a list of
-available encodings.
+Returns the most preferred encoding from the client.
 
 ##### encoding(availableEncodings)
 
 Returns the most preferred encoding from a list of available encodings.
+
+##### encodings()
+
+Returns an array of preferred encodings ordered by the client preference.
+
+##### encodings(availableEncodings)
+
+Returns an array of preferred encodings ordered by priority from a list of
+available encodings.
 
 ## License
 
