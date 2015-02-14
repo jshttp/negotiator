@@ -191,6 +191,10 @@ var Negotiator = require('..');
       accept: 'application/json;q=0.9, text/html;q=0.8, application/json;q=0.7',
       provided: ['application/json', 'text/html'],
       selected: ['application/json', 'text/html']
+    }, {
+      accept: '*/*;q=0.8, text/*, image/*',
+      provided: ['application/json', 'text/html', 'text/plain', 'text/xml', 'application/xml', 'image/gif', 'image/jpeg', 'image/png', 'audio/mp3', 'application/javascript', 'text/javascript'],
+      selected: ['text/html', 'text/plain', 'text/xml', 'text/javascript', 'image/gif', 'image/jpeg', 'image/png', 'application/json', 'application/xml', 'audio/mp3', 'application/javascript']
     }
 
   ];

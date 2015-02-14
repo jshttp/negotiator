@@ -140,6 +140,10 @@ var Negotiator = require('..');
       accept: 'en;q=0.9, es;q=0.8, en;q=0.7',
       provided: ['en', 'es'],
       selected: ['en', 'es']
+    }, {
+      accept: '*;q=0.8, en, es',
+      provided: ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl'],
+      selected: ['en', 'es', 'fr', 'de', 'it', 'pt', 'no', 'se', 'fi', 'ro', 'nl']
     }
   ];
 

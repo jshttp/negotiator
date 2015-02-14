@@ -1,3 +1,8 @@
+unreleased
+==========
+
+  * Fix preference sorting to be stable for long acceptable lists
+
 0.5.0 / 2014-12-18
 ==================
 
