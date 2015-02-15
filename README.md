@@ -181,6 +181,12 @@ Returns an array of preferred encodings ordered by the client preference.
 Returns an array of preferred encodings ordered by priority from a list of
 available encodings.
 
+## See Also
+
+The [accepts](https://npmjs.org/package/accepts#readme) module builds on
+this module and provides an alternative interface, mime type validation,
+and more.
+
 ## License
 
 [MIT](LICENSE)
