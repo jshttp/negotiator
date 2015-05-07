@@ -1,5 +1,5 @@
-unreleased
-==========
+0.5.2 / 2015-05-06
+==================
 
   * Fix comparing media types with quoted values
   * Fix splitting media types with quoted commas
