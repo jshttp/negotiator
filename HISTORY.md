@@ -1,6 +1,7 @@
 unreleased
 ==========
 
+  * Fix comparing media types with quoted values
   * Fix splitting media types with quoted commas
 
 0.5.1 / 2015-02-14
