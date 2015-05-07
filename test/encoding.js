@@ -1,153 +1,442 @@
 
-var Negotiator = require('..');
+var assert = require('assert')
+var Negotiator = require('..')
 
-(function() {
-  var configuration, testConfigurations, testCorrectEncoding, _i, _len,
-    _this = this;
+describe('negotiator.encoding()', function () {
+  whenAcceptEncoding(undefined, function () {
+    it('should return identity', function () {
+      assert.strictEqual(this.negotiator.encoding(), 'identity')
+    })
+  })
 
-  this["Should return identity encoding when no encoding is provided"] = function(test) {
-    var request = createRequest({});
-    var negotiator = new Negotiator(request);
+  whenAcceptEncoding('*', function () {
+    it('should return *', function () {
+      assert.strictEqual(this.negotiator.encoding(), '*')
+    })
+  })
 
-    test.deepEqual(negotiator.encodings(), ['identity']);
-    test.strictEqual(negotiator.encoding(), 'identity');
+  whenAcceptEncoding('*, gzip', function () {
+    it('should return *', function () {
+      assert.strictEqual(this.negotiator.encoding(), '*')
+    })
+  })
 
-    return test.done();
-  };
+  whenAcceptEncoding('*, gzip;q=0', function () {
+    it('should return *', function () {
+      assert.strictEqual(this.negotiator.encoding(), '*')
+    })
+  })
 
-  this["Should include the identity encoding even if not explicitly listed"] = function(test) {
-    var request = createRequest({'Accept-Encoding': 'gzip'});
-    var negotiator = new Negotiator(request);
+  whenAcceptEncoding('*;q=0', function () {
+    it('should return undefined', function () {
+      assert.strictEqual(this.negotiator.encoding(), undefined)
+    })
+  })
 
-    test.deepEqual(negotiator.encodings(), ['gzip', 'identity']);
-    test.strictEqual(negotiator.encoding(), 'gzip');
+  whenAcceptEncoding('*;q=0, identity;q=1', function () {
+    it('should return identity', function () {
+      assert.strictEqual(this.negotiator.encoding(), 'identity')
+    })
+  })
 
-    return test.done();
-  };
+  whenAcceptEncoding('identity', function () {
+    it('should return identity', function () {
+      assert.strictEqual(this.negotiator.encoding(), 'identity')
+    })
+  })
 
-  this["Should not return identity encoding if q = 0"] = function(test) {
-    var request = createRequest({'Accept-Encoding': 'identity;q=0'});
-    var negotiator = new Negotiator(request);
+  whenAcceptEncoding('identity;q=0', function () {
+    it('should return undefined', function () {
+      assert.strictEqual(this.negotiator.encoding(), undefined)
+    })
+  })
 
-    test.deepEqual(negotiator.encodings(), []);
-    test.strictEqual(negotiator.encoding(), undefined);
+  whenAcceptEncoding('gzip', function () {
+    it('should return gzip', function () {
+      assert.strictEqual(this.negotiator.encoding(), 'gzip')
+    })
+  })
 
-    return test.done();
-  };
+  whenAcceptEncoding('gzip, compress;q=0', function () {
+    it('should return gzip', function () {
+      assert.strictEqual(this.negotiator.encoding(), 'gzip')
+    })
+  })
 
-  this["Should not return identity encoding if * has q = 0"] = function(test) {
-    var request = createRequest({'Accept-Encoding': '*;q=0'});
-    var negotiator = new Negotiator(request);
+  whenAcceptEncoding('gzip, deflate', function () {
+    it('should return gzip', function () {
+      assert.strictEqual(this.negotiator.encoding(), 'gzip')
+    })
+  })
 
-    test.deepEqual(negotiator.encodings(), []);
-    test.strictEqual(negotiator.encoding(), undefined);
+  whenAcceptEncoding('gzip;q=0.8, deflate', function () {
+    it('should return deflate', function () {
+      assert.strictEqual(this.negotiator.encoding(), 'deflate')
+    })
+  })
 
-    return test.done();
-  };
+  whenAcceptEncoding('gzip;q=0.8, identity;q=0.5, *;q=0.3', function () {
+    it('should return gzip', function () {
+      assert.strictEqual(this.negotiator.encoding(), 'gzip')
+    })
+  })
+})
 
-  this["Should not return identity encoding if * has q = 0 but identity explicitly has q > 0"] = function(test) {
-    var request = createRequest({'Accept-Encoding': '*;q=0, identity;q=0.5'});
-    var negotiator = new Negotiator(request);
+describe('negotiator.encoding(array)', function () {
+  whenAcceptEncoding(undefined, function () {
+    it('should return undefined for empty list', function () {
+      assert.strictEqual(this.negotiator.encoding([]), undefined)
+    })
 
-    test.deepEqual(negotiator.encodings(), ['identity']);
-    test.strictEqual(negotiator.encoding(), 'identity');
+    it('should only match identity', function () {
+      assert.strictEqual(this.negotiator.encoding(['identity']), 'identity')
+      assert.strictEqual(this.negotiator.encoding(['gzip']), undefined)
+    })
+  })
 
-    return test.done();
-  };
+  whenAcceptEncoding('*', function () {
+    it('should return undefined for empty list', function () {
+      assert.strictEqual(this.negotiator.encoding([]), undefined)
+    })
 
-  this["Should be case insensitive"] = function(test) {
-    var request = createRequest({'Accept-Encoding': 'IDENTITY'});
-    var negotiator = new Negotiator(request);
+    it('should return first item in list', function () {
+      assert.strictEqual(this.negotiator.encoding(['identity']), 'identity')
+      assert.strictEqual(this.negotiator.encoding(['gzip']), 'gzip')
+      assert.strictEqual(this.negotiator.encoding(['gzip', 'identity']), 'gzip')
+    })
+  })
 
-    test.deepEqual(negotiator.encodings(['identity']), ['identity']);
-    test.strictEqual(negotiator.encoding(['identity']), 'identity');
+  whenAcceptEncoding('*, gzip', function () {
+    it('should prefer gzip', function () {
+      assert.strictEqual(this.negotiator.encoding(['identity']), 'identity')
+      assert.strictEqual(this.negotiator.encoding(['gzip']), 'gzip')
+      assert.strictEqual(this.negotiator.encoding(['compress', 'gzip']), 'gzip')
+    })
+  })
 
-    return test.done();
-  };
+  whenAcceptEncoding('*, gzip;q=0', function () {
+    it('should exclude gzip', function () {
+      assert.strictEqual(this.negotiator.encoding(['identity']), 'identity')
+      assert.strictEqual(this.negotiator.encoding(['gzip']), undefined)
+      assert.strictEqual(this.negotiator.encoding(['gzip', 'compress']), 'compress')
+    })
+  })
 
-  testCorrectEncoding = function(c) {
-    return _this["Should return " + c.selected + " for accept-encoding header " + c.accept + " with provided encoding " + c.provided] = function(test) {
-      var request = createRequest({'Accept-Encoding': c.accept});
-      var negotiator = new Negotiator(request);
+  whenAcceptEncoding('*;q=0', function () {
+    it('should return undefined for empty list', function () {
+      assert.strictEqual(this.negotiator.encoding([]), undefined)
+    })
 
-      test.deepEqual(negotiator.encodings(c.provided), c.selected);
-      test.strictEqual(negotiator.encoding(c.provided), c.selected[0]);
+    it('should match nothing', function () {
+      assert.strictEqual(this.negotiator.encoding(['identity']), undefined)
+      assert.strictEqual(this.negotiator.encoding(['gzip']), undefined)
+    })
+  })
 
-      return test.done();
-    };
-  };
+  whenAcceptEncoding('*;q=0, identity;q=1', function () {
+    it('should return undefined for empty list', function () {
+      assert.strictEqual(this.negotiator.encoding([]), undefined)
+    })
 
-  testConfigurations = [
-    {
-      accept: undefined,
-      provided: ['identity', 'gzip'],
-      selected: ['identity']
-    }, {
-      accept: 'gzip',
-      provided: ['identity', 'gzip'],
-      selected: ['gzip', 'identity']
-    }, {
-      accept: 'gzip, compress',
-      provided: ['compress'],
-      selected: ['compress']
-    }, {
-      accept: 'deflate',
-      provided: ['gzip', 'identity'],
-      selected: ['identity']
-    }, {
-      accept: '*',
-      provided: ['identity', 'gzip'],
-      selected: ['identity', 'gzip']
-    }, {
-      accept: 'gzip, compress',
-      provided: ['compress', 'identity'],
-      selected: ['compress', 'identity']
-    }, {
-      accept: 'gzip, compress;q=0',
-      provided: ['compress', 'identity'],
-      selected: ['identity']
-    }, {
-      accept: 'gzip;q=0.8, identity;q=0.5, *;q=0.3',
-      provided: ['identity', 'gzip', 'compress'],
-      selected: ['gzip', 'identity', 'compress']
-    }, {
-      accept: 'gzip;q=0.8, compress',
-      provided: ['gzip', 'compress'],
-      selected: ['compress', 'gzip']
-    }, {
-      accept: '*, compress;q=0',
-      provided: ['gzip', 'compress'],
-      selected: ['gzip']
-    }, {
-      accept: 'gzip;q=0.8, compress',
-      provided: null,
-      selected: ['compress', 'gzip', 'identity']
-    }, {
-      accept : '*, compress',
-      provided : ['gzip', 'compress'],
-      selected : ['compress', 'gzip' ]
-    }, {
-      accept : 'gzip;q=0.9, compress;q=0.8, gzip;q=0.7',
-      provided : ['gzip', 'compress'],
-      selected : ['gzip', 'compress']
-    }
-  ];
+    it('should still match identity', function () {
+      assert.strictEqual(this.negotiator.encoding(['identity']), 'identity')
+      assert.strictEqual(this.negotiator.encoding(['gzip']), undefined)
+    })
+  })
 
-  for (_i = 0, _len = testConfigurations.length; _i < _len; _i++) {
-    configuration = testConfigurations[_i];
-    testCorrectEncoding(configuration);
-  }
+  whenAcceptEncoding('identity', function () {
+    it('should return undefined for empty list', function () {
+      assert.strictEqual(this.negotiator.encoding([]), undefined)
+    })
 
-}).call(this);
+    it('should only match identity', function () {
+      assert.strictEqual(this.negotiator.encoding(['identity']), 'identity')
+      assert.strictEqual(this.negotiator.encoding(['gzip']), undefined)
+    })
+  })
+
+  whenAcceptEncoding('identity;q=0', function () {
+    it('should return undefined for empty list', function () {
+      assert.strictEqual(this.negotiator.encoding([]), undefined)
+    })
+
+    it('should match nothing', function () {
+      assert.strictEqual(this.negotiator.encoding(['identity']), undefined)
+      assert.strictEqual(this.negotiator.encoding(['gzip']), undefined)
+    })
+  })
+
+  whenAcceptEncoding('gzip', function () {
+    it('should return undefined for empty list', function () {
+      assert.strictEqual(this.negotiator.encoding([]), undefined)
+    })
+
+    it('should return client-preferred encodings', function () {
+      assert.strictEqual(this.negotiator.encoding(['gzip']), 'gzip')
+      assert.strictEqual(this.negotiator.encoding(['identity', 'gzip']), 'gzip')
+      assert.strictEqual(this.negotiator.encoding(['identity']), 'identity')
+    })
+  })
+
+  whenAcceptEncoding('gzip, compress;q=0', function () {
+    it('should not return compress', function () {
+      assert.strictEqual(this.negotiator.encoding(['compress']), undefined)
+      assert.strictEqual(this.negotiator.encoding(['deflate', 'compress']), undefined)
+      assert.strictEqual(this.negotiator.encoding(['gzip', 'compress']), 'gzip')
+    })
+  })
+
+  whenAcceptEncoding('gzip, deflate', function () {
+    it('should return first client-preferred encoding', function () {
+      assert.strictEqual(this.negotiator.encoding(['deflate', 'compress']), 'deflate')
+    })
+  })
+
+  whenAcceptEncoding('gzip;q=0.8, deflate', function () {
+    it('should return most client-preferred encoding', function () {
+      assert.strictEqual(this.negotiator.encoding(['gzip']), 'gzip')
+      assert.strictEqual(this.negotiator.encoding(['deflate']), 'deflate')
+      assert.strictEqual(this.negotiator.encoding(['deflate', 'gzip']), 'deflate')
+    })
+  })
+
+  whenAcceptEncoding('gzip;q=0.8, identity;q=0.5, *;q=0.3', function () {
+    it('should return most client-preferred encoding', function () {
+      assert.strictEqual(this.negotiator.encoding(['gzip']), 'gzip')
+      assert.strictEqual(this.negotiator.encoding(['compress', 'identity']), 'identity')
+    })
+  })
+})
+
+describe('negotiator.encodings()', function () {
+  whenAcceptEncoding(undefined, function () {
+    it('should return identity', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['identity'])
+    })
+  })
+
+  whenAcceptEncoding('*', function () {
+    it('should return *', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['*'])
+    })
+  })
+
+  whenAcceptEncoding('*, gzip', function () {
+    it('should prefer gzip', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['*', 'gzip'])
+    })
+  })
+
+  whenAcceptEncoding('*, gzip;q=0', function () {
+    it('should return *', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['*'])
+    })
+  })
+
+  whenAcceptEncoding('*;q=0', function () {
+    it('should return an empty list', function () {
+      assert.deepEqual(this.negotiator.encodings(), [])
+    })
+  })
+
+  whenAcceptEncoding('*;q=0, identity;q=1', function () {
+    it('should return identity', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['identity'])
+    })
+  })
+
+  whenAcceptEncoding('identity', function () {
+    it('should return identity', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['identity'])
+    })
+  })
+
+  whenAcceptEncoding('identity;q=0', function () {
+    it('should return an empty list', function () {
+      assert.deepEqual(this.negotiator.encodings(), [])
+    })
+  })
+
+  whenAcceptEncoding('gzip', function () {
+    it('should return gzip, identity', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['gzip', 'identity'])
+    })
+  })
+
+  whenAcceptEncoding('gzip, compress;q=0', function () {
+    it('should not return compress', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['gzip', 'identity'])
+    })
+  })
+
+  whenAcceptEncoding('gzip, deflate', function () {
+    it('should return client-preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['gzip', 'deflate', 'identity'])
+    })
+  })
+
+  whenAcceptEncoding('gzip;q=0.8, deflate', function () {
+    it('should return client-preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['deflate', 'gzip', 'identity'])
+    })
+  })
+
+  whenAcceptEncoding('gzip;q=0.8, identity;q=0.5, *;q=0.3', function () {
+    it('should return client-preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['gzip', 'identity', '*'])
+    })
+  })
+})
+
+describe('negotiator.encodings(array)', function () {
+  whenAcceptEncoding(undefined, function () {
+    it('should return empty list for empty list', function () {
+      assert.deepEqual(this.negotiator.encodings([]), [])
+    })
+
+    it('should only match identity', function () {
+      assert.deepEqual(this.negotiator.encodings(['identity']), ['identity'])
+      assert.deepEqual(this.negotiator.encodings(['gzip']), [])
+    })
+  })
+
+  whenAcceptEncoding('*', function () {
+    it('should return empty list for empty list', function () {
+      assert.deepEqual(this.negotiator.encodings([]), [])
+    })
+
+    it('should return original list', function () {
+      assert.deepEqual(this.negotiator.encodings(['identity']), ['identity'])
+      assert.deepEqual(this.negotiator.encodings(['gzip']), ['gzip'])
+      assert.deepEqual(this.negotiator.encodings(['gzip', 'identity']), ['gzip', 'identity'])
+    })
+  })
+
+  whenAcceptEncoding('*, gzip', function () {
+    it('should prefer gzip', function () {
+      assert.deepEqual(this.negotiator.encodings(['identity']), ['identity'])
+      assert.deepEqual(this.negotiator.encodings(['gzip']), ['gzip'])
+      assert.deepEqual(this.negotiator.encodings(['compress', 'gzip']), ['gzip', 'compress'])
+    })
+  })
+
+  whenAcceptEncoding('*, gzip;q=0', function () {
+    it('should exclude gzip', function () {
+      assert.deepEqual(this.negotiator.encodings(['identity']), ['identity'])
+      assert.deepEqual(this.negotiator.encodings(['gzip']), [])
+      assert.deepEqual(this.negotiator.encodings(['gzip', 'compress']), ['compress'])
+    })
+  })
+
+  whenAcceptEncoding('*;q=0', function () {
+    it('should always return empty list', function () {
+      assert.deepEqual(this.negotiator.encodings([]), [])
+      assert.deepEqual(this.negotiator.encodings(['identity']), [])
+      assert.deepEqual(this.negotiator.encodings(['gzip']), [])
+    })
+  })
+
+  whenAcceptEncoding('*;q=0, identity;q=1', function () {
+    it('should still match identity', function () {
+      assert.deepEqual(this.negotiator.encodings([]), [])
+      assert.deepEqual(this.negotiator.encodings(['identity']), ['identity'])
+      assert.deepEqual(this.negotiator.encodings(['gzip']), [])
+    })
+  })
+
+  whenAcceptEncoding('identity', function () {
+    it('should return empty list for empty list', function () {
+      assert.deepEqual(this.negotiator.encodings([]), [])
+    })
+
+    it('should only match identity', function () {
+      assert.deepEqual(this.negotiator.encodings(['identity']), ['identity'])
+      assert.deepEqual(this.negotiator.encodings(['gzip']), [])
+    })
+  })
+
+  whenAcceptEncoding('identity;q=0', function () {
+    it('should always return empty list', function () {
+      assert.deepEqual(this.negotiator.encodings([]), [])
+      assert.deepEqual(this.negotiator.encodings(['identity']), [])
+      assert.deepEqual(this.negotiator.encodings(['gzip']), [])
+    })
+  })
+
+  whenAcceptEncoding('gzip', function () {
+    it('should return empty list for empty list', function () {
+      assert.deepEqual(this.negotiator.encodings([]), [])
+    })
+
+    it('should be case insensitive, returning provided casing', function () {
+      assert.deepEqual(this.negotiator.encodings(['GZIP']), ['GZIP'])
+      assert.deepEqual(this.negotiator.encodings(['gzip', 'GZIP']), ['gzip', 'GZIP'])
+      assert.deepEqual(this.negotiator.encodings(['GZIP', 'gzip']), ['GZIP', 'gzip'])
+    })
+
+    it('should return client-preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(['gzip']), ['gzip'])
+      assert.deepEqual(this.negotiator.encodings(['gzip', 'identity']), ['gzip', 'identity'])
+      assert.deepEqual(this.negotiator.encodings(['identity', 'gzip']), ['gzip', 'identity'])
+      assert.deepEqual(this.negotiator.encodings(['identity']), ['identity'])
+    })
+  })
+
+  whenAcceptEncoding('gzip, compress;q=0', function () {
+    it('should not return compress', function () {
+      assert.deepEqual(this.negotiator.encodings(['gzip', 'compress']), ['gzip'])
+    })
+  })
+
+  whenAcceptEncoding('gzip, deflate', function () {
+    it('should return client-preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(['gzip']), ['gzip'])
+      assert.deepEqual(this.negotiator.encodings(['gzip', 'identity']), ['gzip', 'identity'])
+      assert.deepEqual(this.negotiator.encodings(['deflate', 'gzip']), ['gzip', 'deflate'])
+      assert.deepEqual(this.negotiator.encodings(['identity']), ['identity'])
+    })
+  })
+
+  whenAcceptEncoding('gzip;q=0.8, deflate', function () {
+    it('should return client-preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(['gzip']), ['gzip'])
+      assert.deepEqual(this.negotiator.encodings(['deflate']), ['deflate'])
+      assert.deepEqual(this.negotiator.encodings(['deflate', 'gzip']), ['deflate', 'gzip'])
+    })
+  })
+
+  whenAcceptEncoding('gzip;q=0.8, identity;q=0.5, *;q=0.3', function () {
+    it('should return client-preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(['gzip']), ['gzip'])
+      assert.deepEqual(this.negotiator.encodings(['identity', 'gzip', 'compress']), ['gzip', 'identity', 'compress'])
+    })
+  })
+})
 
 function createRequest(headers) {
   var request = {
     headers: {}
-  };
+  }
 
-  Object.keys(headers).forEach(function (key) {
-    request.headers[key.toLowerCase()] = headers[key];
+  if (headers) {
+    Object.keys(headers).forEach(function (key) {
+      request.headers[key.toLowerCase()] = headers[key]
+    })
+  }
+
+  return request
+}
+
+function whenAcceptEncoding(acceptEncoding, func) {
+  var description = !acceptEncoding
+    ? 'when no Accept-Encoding'
+    : 'when Accept-Encoding: ' + acceptEncoding
+
+  describe(description, function () {
+    before(function () {
+      this.negotiator = new Negotiator(createRequest({'Accept-Encoding': acceptEncoding}))
+    })
+
+    func()
   })
-
-  return request;
 }
