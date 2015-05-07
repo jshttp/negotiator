@@ -169,6 +169,12 @@ describe('negotiator.mediaTypes()', function () {
     })
   })
 
+  whenAccept('text/html;foo="bar,text/css;";fizz="buzz,5", text/plain', function () {
+    it('should return text/html, text/plain', function () {
+      assert.deepEqual(this.negotiator.mediaTypes(), ['text/html', 'text/plain'])
+    })
+  })
+
   whenAccept('text/plain, application/json;q=0.5, text/html, */*;q=0.1', function () {
     it('should return text/plain, text/html, application/json, */*', function () {
       assert.deepEqual(this.negotiator.mediaTypes(), ['text/plain', 'text/html', 'application/json', '*/*'])
