@@ -169,6 +169,12 @@ describe('negotiator.mediaTypes()', function () {
     })
   })
 
+  whenAccept('text/html;LEVEL=1', function () {
+    it('should return text/html;LEVEL=1', function () {
+      assert.deepEqual(this.negotiator.mediaTypes(), ['text/html'])
+    })
+  })
+
   whenAccept('text/html;foo="bar,text/css;";fizz="buzz,5", text/plain', function () {
     it('should return text/html, text/plain', function () {
       assert.deepEqual(this.negotiator.mediaTypes(), ['text/html', 'text/plain'])
@@ -306,6 +312,11 @@ describe('negotiator.mediaTypes(array)', function () {
       ['text/html;level=1']
     ))
 
+    it('should accept text/html;Level=1', mediaTypesNegotiated(
+      ['text/html;Level=1'],
+      ['text/html;Level=1']
+    ))
+
     it('should not accept text/html;level=2', mediaTypesNegotiated(
       ['text/html;level=2'],
       []
@@ -343,6 +354,30 @@ describe('negotiator.mediaTypes(array)', function () {
     it('should accept text/html;level=1;foo="bar"', mediaTypesNegotiated(
       ['text/html;level=1;foo="bar"'],
       ['text/html;level=1;foo="bar"']
+    ))
+  })
+
+  whenAccept('text/html;LEVEL=1', function () {
+    it('should accept text/html;level=1', mediaTypesNegotiated(
+      ['text/html;level=1'],
+      ['text/html;level=1']
+    ))
+
+    it('should accept text/html;Level=1', mediaTypesNegotiated(
+      ['text/html;Level=1'],
+      ['text/html;Level=1']
+    ))
+  })
+
+  whenAccept('text/html;LEVEL=1;level=2', function () {
+    it('should accept text/html;level=2', mediaTypesNegotiated(
+      ['text/html;level=2'],
+      ['text/html;level=2']
+    ))
+
+    it('should not accept text/html;level=1', mediaTypesNegotiated(
+      ['text/html;level=1'],
+      []
     ))
   })
 
