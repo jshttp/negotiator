@@ -1,5 +1,5 @@
-unreleased
-==========
+0.5.3 / 2015-05-10
+==================
 
   * Fix media type parameter matching to be case-insensitive
 
