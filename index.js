@@ -1,11 +1,25 @@
+/*!
+ * negotiator
+ * Copyright(c) 2012 Federico Romero
+ * Copyright(c) 2012-2014 Isaac Z. Schlueter
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
 
-var preferredCharsets = require('./lib/charset');
-var preferredEncodings = require('./lib/encoding');
-var preferredLanguages = require('./lib/language');
-var preferredMediaTypes = require('./lib/mediaType');
+/**
+ * Cached loaded submodules.
+ * @private
+ */
+
+var modules = Object.create(null);
+
+/**
+ * Module exports.
+ * @public
+ */
 
 module.exports = Negotiator;
-Negotiator.Negotiator = Negotiator;
+module.exports.Negotiator = Negotiator;
 
 function Negotiator(request) {
   if (!(this instanceof Negotiator)) {
@@ -21,6 +35,7 @@ Negotiator.prototype.charset = function charset(available) {
 };
 
 Negotiator.prototype.charsets = function charsets(available) {
+  var preferredCharsets = loadModule('charset').preferredCharsets;
   return preferredCharsets(this.request.headers['accept-charset'], available);
 };
 
@@ -30,6 +45,7 @@ Negotiator.prototype.encoding = function encoding(available) {
 };
 
 Negotiator.prototype.encodings = function encodings(available) {
+  var preferredEncodings = loadModule('encoding').preferredEncodings;
   return preferredEncodings(this.request.headers['accept-encoding'], available);
 };
 
@@ -39,6 +55,7 @@ Negotiator.prototype.language = function language(available) {
 };
 
 Negotiator.prototype.languages = function languages(available) {
+  var preferredLanguages = loadModule('language').preferredLanguages;
   return preferredLanguages(this.request.headers['accept-language'], available);
 };
 
@@ -48,6 +65,7 @@ Negotiator.prototype.mediaType = function mediaType(available) {
 };
 
 Negotiator.prototype.mediaTypes = function mediaTypes(available) {
+  var preferredMediaTypes = loadModule('mediaType').preferredMediaTypes;
   return preferredMediaTypes(this.request.headers.accept, available);
 };
 
@@ -60,3 +78,39 @@ Negotiator.prototype.preferredLanguage = Negotiator.prototype.language;
 Negotiator.prototype.preferredLanguages = Negotiator.prototype.languages;
 Negotiator.prototype.preferredMediaType = Negotiator.prototype.mediaType;
 Negotiator.prototype.preferredMediaTypes = Negotiator.prototype.mediaTypes;
+
+/**
+ * Load the given module.
+ * @private
+ */
+
+function loadModule(moduleName) {
+  var module = modules[moduleName];
+
+  if (module !== undefined) {
+    return module;
+  }
+
+  // This uses a switch for static require analysis
+  switch (moduleName) {
+    case 'charset':
+      module = require('./lib/charset');
+      break;
+    case 'encoding':
+      module = require('./lib/encoding');
+      break;
+    case 'language':
+      module = require('./lib/language');
+      break;
+    case 'mediaType':
+      module = require('./lib/mediaType');
+      break;
+    default:
+      throw new Error('Cannot find module \'' + moduleName + '\'');
+  }
+
+  // Store to prevent invoking require()
+  modules[moduleName] = module;
+
+  return module;
+}
