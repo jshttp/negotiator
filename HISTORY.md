@@ -3,6 +3,7 @@ unreleased
 
   * Lazy-load modules from main entry point
   * perf: delay type concatenation until needed
+  * perf: hoist regular expressions
 
 0.5.3 / 2015-05-10
 ==================
