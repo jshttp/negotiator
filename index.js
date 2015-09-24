@@ -21,6 +21,12 @@ var modules = Object.create(null);
 module.exports = Negotiator;
 module.exports.Negotiator = Negotiator;
 
+/**
+ * Create a Negotiator instance from a request.
+ * @param {object} request
+ * @public
+ */
+
 function Negotiator(request) {
   if (!(this instanceof Negotiator)) {
     return new Negotiator(request);
