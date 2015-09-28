@@ -1,6 +1,7 @@
 unreleased
 ==========
 
+  * Fix parsing `Accept` parameters with quoted semicolons
   * Lazy-load modules from main entry point
   * perf: delay type concatenation until needed
   * perf: hoist regular expressions

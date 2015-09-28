@@ -362,6 +362,13 @@ describe('negotiator.mediaTypes(array)', function () {
     ))
   })
 
+  whenAccept('text/html;foo=";level=2;"', function () {
+    it('should not accept text/html;level=2', mediaTypesNegotiated(
+      ['text/html;level=2'],
+      []
+    ))
+  })
+
   whenAccept('text/html;LEVEL=1', function () {
     it('should accept text/html;level=1', mediaTypesNegotiated(
       ['text/html;level=1'],
