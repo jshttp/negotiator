@@ -6,6 +6,7 @@ unreleased
   * Lazy-load modules from main entry point
   * perf: delay type concatenation until needed
   * perf: hoist regular expressions
+  * perf: remove a closure from media type parsing
 
 0.5.3 / 2015-05-10
 ==================
