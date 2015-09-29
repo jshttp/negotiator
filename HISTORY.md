@@ -6,6 +6,7 @@ unreleased
   * Fix parsing `Accept` parameters with quoted semicolons
   * Lazy-load modules from main entry point
   * perf: delay type concatenation until needed
+  * perf: enable strict mode
   * perf: hoist regular expressions
   * perf: remove closures getting spec properties
   * perf: remove a closure from media type parsing

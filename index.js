@@ -6,6 +6,8 @@
  * MIT Licensed
  */
 
+'use strict';
+
 /**
  * Cached loaded submodules.
  * @private
