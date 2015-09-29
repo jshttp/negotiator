@@ -1,6 +1,7 @@
 unreleased
 ==========
 
+  * Fix including type extensions in parameters in `Accept` parsing
   * Fix parsing `Accept` parameters with quoted equals
   * Fix parsing `Accept` parameters with quoted semicolons
   * Lazy-load modules from main entry point
