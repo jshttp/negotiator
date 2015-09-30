@@ -1,5 +1,5 @@
-unreleased
-==========
+0.6.0 / 2015-09-29
+==================
 
   * Fix including type extensions in parameters in `Accept` parsing
   * Fix parsing `Accept` parameters with quoted equals
