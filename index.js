@@ -67,14 +67,14 @@ Negotiator.prototype.languages = function languages(available) {
   return preferredLanguages(this.request.headers['accept-language'], available);
 };
 
-Negotiator.prototype.mediaType = function mediaType(available) {
-  var set = this.mediaTypes(available);
+Negotiator.prototype.mediaType = function mediaType(available, options) {
+  var set = this.mediaTypes(available, options);
   return set && set[0];
 };
 
-Negotiator.prototype.mediaTypes = function mediaTypes(available) {
+Negotiator.prototype.mediaTypes = function mediaTypes(available, options) {
   var preferredMediaTypes = loadModule('mediaType').preferredMediaTypes;
-  return preferredMediaTypes(this.request.headers.accept, available);
+  return preferredMediaTypes(this.request.headers.accept, available, options);
 };
 
 // Backwards compatibility
