@@ -1,5 +1,5 @@
-unreleased
-==========
+0.6.1 / 2016-05-02
+==================
 
   * perf: improve `Accept` parsing speed
   * perf: improve `Accept-Charset` parsing speed
