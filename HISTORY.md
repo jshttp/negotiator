@@ -1,3 +1,8 @@
+unreleased
+==========
+
+  * perf: improve `Accept-Language` parsing speed
+
 0.6.0 / 2015-09-29
 ==================
 
