@@ -168,7 +168,7 @@ You can check a working example at `examples/encoding.js`.
 
 Returns the most preferred encoding from the client.
 
-##### encoding(availableEncodings)
+##### encoding(availableEncodings, options)
 
 Returns the most preferred encoding from a list of available encodings.
 
@@ -176,10 +176,20 @@ Returns the most preferred encoding from a list of available encodings.
 
 Returns an array of preferred encodings ordered by the client preference.
 
-##### encodings(availableEncodings)
+##### encodings(availableEncodings, options)
 
 Returns an array of preferred encodings ordered by priority from a list of
 available encodings.
+
+The options has one available option. The default value if not specified is
+```js
+{ sortPreference: 'client' }
+```
+
+#### Sort options
+`client`: sorts first by client quality level and then by client given order
+`clientThenServer`: sorts first by client quality level and then by server given order
+`server`: sorts by server given order
 
 ## See Also
 

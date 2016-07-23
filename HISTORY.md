@@ -1,3 +1,8 @@
+unreleased
+==========
+
+  * Add configurable preferred sorting order for `Accept-Encoding`
+
 0.6.1 / 2016-05-02
 ==================
 
