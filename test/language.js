@@ -172,6 +172,12 @@ describe('negotiator.language(array)', function () {
     })
   })
 
+  whenAcceptLanguage('en, en-US;q=0.8', function() {
+    it('should use the supported language', function() {
+      assert.strictEqual(this.negotiator.language(['en-US', 'en-GB']), 'en-US')
+    })
+  })
+
   whenAcceptLanguage('en;q=0.9, es;q=0.8, en;q=0.7', function () {
     it('should use highest perferred order on duplicate', function () {
       assert.strictEqual(this.negotiator.language(['es']), 'es')
