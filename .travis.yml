@@ -11,6 +11,7 @@ node_js:
   - "5.12"
   - "6.10"
 sudo: false
+dist: precise
 cache:
   directories:
     - node_modules
