@@ -391,7 +391,7 @@ describe('negotiator.languages(array)', function () {
   whenAcceptLanguage('nl;q=0.5, fr, de, en, it, es, pt, no, se, fi, ro', function () {
     it('should return preferred languages', function () {
       assert.deepEqual(this.negotiator.languages(['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl']),
-       ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl'])
+        ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl'])
     })
   })
 })
