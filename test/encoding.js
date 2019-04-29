@@ -281,6 +281,12 @@ describe('negotiator.encodings()', function () {
     })
   })
 
+  whenAcceptEncoding('gzip;foo=bar;q=1, deflate;q=1', function () {
+    it('should return client-preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['gzip', 'deflate', 'identity'])
+    })
+  })
+
   whenAcceptEncoding('gzip;q=0.8, identity;q=0.5, *;q=0.3', function () {
     it('should return client-preferred encodings', function () {
       assert.deepEqual(this.negotiator.encodings(), ['gzip', 'identity', '*'])

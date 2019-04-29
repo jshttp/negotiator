@@ -1,3 +1,8 @@
+unreleased
+==========
+
+  * Fix sorting charset, encoding, and language with extra parameters
+
 0.6.1 / 2016-05-02
 ==================
 

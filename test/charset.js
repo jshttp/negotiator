@@ -200,6 +200,12 @@ describe('negotiator.charsets()', function () {
     })
   })
 
+  whenAcceptCharset('UTF-8;foo=bar;q=1, ISO-8859-1;q=1', function () {
+    it('should return client-preferred charsets', function () {
+      assert.deepEqual(this.negotiator.charsets(), ['UTF-8', 'ISO-8859-1'])
+    })
+  })
+
   whenAcceptCharset('UTF-8;q=0.9, ISO-8859-1;q=0.8, UTF-8;q=0.7', function () {
     it.skip('should use highest perferred order on duplicate', function () {
       assert.deepEqual(this.negotiator.charsets(), ['UTF-8', 'ISO-8859-1'])
