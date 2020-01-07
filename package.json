@@ -20,7 +20,7 @@
   "devDependencies": {
     "eslint": "6.7.2",
     "eslint-plugin-markdown": "1.0.1",
-    "mocha": "6.2.2",
+    "mocha": "7.0.0",
     "nyc": "14.1.1"
   },
   "files": [
