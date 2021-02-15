@@ -18,7 +18,7 @@
   ],
   "repository": "jshttp/negotiator",
   "devDependencies": {
-    "eslint": "7.18.0",
+    "eslint": "7.20.0",
     "eslint-plugin-markdown": "1.0.2",
     "mocha": "8.3.0",
     "nyc": "15.1.0"
