@@ -52,6 +52,26 @@ describe('negotiator.mediaType()', function () {
   })
 })
 
+describe('negotiator.mediaType(undefined, {detailed: true})', function () {
+  whenAccept('text/*', function () {
+    it('should return a detailed spec object with text/*', function () {
+      assert.deepEqual(
+        this.negotiator.mediaType(undefined, {detailed: true}),
+        {"type": "text/*", parameters: {}, "q": 1}
+      )
+    })
+  })
+
+  whenAccept('text/plain;charset=utf-8;q=0.8, application/json;q=0.5, text/html;q=0.7, */*;q=0.1', function () {
+    it('should return a detailed object for text/plain', function () {
+      assert.deepEqual(
+        this.negotiator.mediaType(undefined, {detailed: true}),
+        {"type": "text/plain", parameters: {"charset": "utf-8"}, "q": .8}
+      )
+    })
+  })
+})
+
 describe('negotiator.mediaType(array)', function () {
   whenAccept(undefined, function () {
     it('should return first item in list', function () {
@@ -126,6 +146,31 @@ describe('negotiator.mediaType(array)', function () {
   })
 })
 
+describe('negotiator.mediaType(array, {detailed: true})', function() {
+  whenAccept('text/*', function () {
+    it('should return a detailed spec object with text/html', function () {
+      assert.deepEqual(
+        this.negotiator.mediaType(["text/html"], {detailed: true}),
+        {"type": "text/html", parameters: {}, "q": 1}
+      )
+    })
+  })
+
+  whenAccept('text/html;LEVEL=1, application/json;q=0.5', function () {
+    it('should return parameters, but require an exact match', function () {
+      assert.deepEqual(
+        this.negotiator.mediaType(["text/html"], {detailed: true}),
+        undefined
+      )
+
+      assert.deepEqual(
+        this.negotiator.mediaType(["text/html; level=1"], {detailed: true}),
+        {"type": "text/html", "parameters": {"level": "1"}, "q": 1}
+      )
+    })
+  })
+})
+
 describe('negotiator.mediaTypes()', function () {
   whenAccept(undefined, function () {
     it('should return */*', function () {
@@ -190,6 +235,29 @@ describe('negotiator.mediaTypes()', function () {
   whenAccept('text/plain, application/json;q=0.5, text/html, text/xml, text/yaml, text/javascript, text/csv, text/css, text/rtf, text/markdown, application/octet-stream;q=0.2, */*;q=0.1', function () {
     it('should return the client-preferred order', function () {
       assert.deepEqual(this.negotiator.mediaTypes(), ['text/plain', 'text/html', 'text/xml', 'text/yaml', 'text/javascript', 'text/csv', 'text/css', 'text/rtf', 'text/markdown', 'application/json', 'application/octet-stream', '*/*'])
+    })
+  })
+})
+
+describe('negotiator.mediaTypes(undefined, {detailed: true})', function() {
+  whenAccept('text/*', function () {
+    it('should return a detailed spec object with text/*', function () {
+      assert.deepEqual(
+        this.negotiator.mediaTypes(undefined, {detailed: true}),
+        [{"type": "text/*", parameters: {}, "q": 1}]
+      )
+    })
+  })
+
+  whenAccept('text/html;LEVEL=1, application/json;q=0.5', function () {
+    it('should return more-detailed spec objects', function () {
+      assert.deepEqual(
+        this.negotiator.mediaTypes(undefined, {detailed: true}),
+        [
+          {"type": "text/html", "parameters": {"level": "1"}, "q": 1},
+          {"type": "application/json", "parameters": {}, "q": 0.5}
+        ]
+      )
     })
   })
 })
@@ -455,6 +523,31 @@ describe('negotiator.mediaTypes(array)', function () {
       ['text/plain', 'text/html', 'text/xml', 'text/yaml', 'text/javascript', 'text/csv', 'text/css', 'text/rtf', 'text/markdown', 'application/json', 'application/octet-stream'],
       ['text/plain', 'text/html', 'text/xml', 'text/yaml', 'text/javascript', 'text/csv', 'text/css', 'text/rtf', 'text/markdown', 'application/json', 'application/octet-stream']
     ))
+  })
+})
+
+describe('negotiator.mediaTypes(array, {detailed: true})', function() {
+  whenAccept('text/*', function () {
+    it('should return a detailed spect object with text/html', function () {
+      assert.deepEqual(
+        this.negotiator.mediaTypes(["text/html"], {detailed: true}),
+        [{"type": "text/html", parameters: {}, "q": 1}]
+      )
+    })
+  })
+
+  whenAccept('text/html;LEVEL=1, application/json;q=0.5', function () {
+    it('should return parameters, but require an exact match', function () {
+      assert.deepEqual(
+        this.negotiator.mediaTypes(["text/html"], {detailed: true}),
+        []
+      )
+
+      assert.deepEqual(
+        this.negotiator.mediaTypes(["text/html; level=1"], {detailed: true}),
+        [{"type": "text/html", "parameters": {"level": "1"}, "q": 1}]
+      )
+    })
   })
 })
 
