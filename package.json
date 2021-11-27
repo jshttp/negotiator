@@ -36,7 +36,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "mocha --reporter spec --check-leaks --bail test/",
-    "test-cov": "nyc --reporter=html --reporter=text npm test",
-    "test-travis": "nyc --reporter=text npm test"
+    "test-ci": "nyc --reporter=lcov --reporter=text npm test",
+    "test-cov": "nyc --reporter=html --reporter=text npm test"
   }
 }
