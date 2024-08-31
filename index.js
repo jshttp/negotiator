@@ -49,8 +49,9 @@ Negotiator.prototype.encoding = function encoding(available, opts) {
   return set && set[0];
 };
 
-Negotiator.prototype.encodings = function encodings(available, { preferred } = {}) {
-  return preferredEncodings(this.request.headers['accept-encoding'], available, preferred);
+Negotiator.prototype.encodings = function encodings(available, options) {
+  opts = options || {};
+  return preferredEncodings(this.request.headers['accept-encoding'], available, opts.preferred);
 };
 
 Negotiator.prototype.language = function language(available) {
