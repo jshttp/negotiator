@@ -50,7 +50,7 @@ Negotiator.prototype.encoding = function encoding(available, opts) {
 };
 
 Negotiator.prototype.encodings = function encodings(available, options) {
-  opts = options || {};
+  var opts = options || {};
   return preferredEncodings(this.request.headers['accept-encoding'], available, opts.preferred);
 };
 

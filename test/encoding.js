@@ -212,14 +212,12 @@ describe('negotiator.encoding(array)', function () {
     it('should return most client-preferred encoding', function () {
       assert.strictEqual(this.negotiator.encoding(['gzip']), 'gzip')
       assert.strictEqual(this.negotiator.encoding(['compress', 'identity']), 'identity')
-      assert.strictEqual(this.negotiator.encoding(['gzip', 'deflate'], ['deflate']), 'gzip')
-      assert.strictEqual(this.negotiator.encoding(['deflate', 'gzip'], ['deflate']), 'gzip')
     })
 
     it('should return developer-preferred encodings', function () {
-      assert.strictEqual(this.negotiator.encoding(['gzip', 'deflate'], ['gzip']), 'gzip')
-      assert.strictEqual(this.negotiator.encoding(['deflate', 'gzip'], ['gzip']), 'gzip')
-      assert.strictEqual(this.negotiator.encoding(['gzip'], ['gzip']), 'gzip')
+      assert.strictEqual(this.negotiator.encoding(['gzip', 'deflate'], { preferred: ['gzip'] }), 'gzip')
+      assert.strictEqual(this.negotiator.encoding(['deflate', 'gzip'], { preferred: ['gzip'] }), 'gzip')
+      assert.strictEqual(this.negotiator.encoding(['gzip'], { preferred: ['gzip'] }), 'gzip')
     })
   })
 })
@@ -439,14 +437,12 @@ describe('negotiator.encodings(array)', function () {
     it('should return client-preferred encodings', function () {
       assert.deepEqual(this.negotiator.encodings(['gzip']), ['gzip'])
       assert.deepEqual(this.negotiator.encodings(['identity', 'gzip', 'compress']), ['gzip', 'identity', 'compress'])
-      assert.deepEqual(this.negotiator.encodings(['gzip', 'deflate'], ['deflate']), ['gzip', 'deflate'])
-      assert.deepEqual(this.negotiator.encodings(['deflate', 'gzip'], ['deflate']), ['gzip', 'deflate'])
     })
 
     it('should return developer-preferred encodings', function () {
-      assert.deepEqual(this.negotiator.encodings(['gzip', 'deflate'], ['gzip']), ['gzip', 'deflate'])
-      assert.deepEqual(this.negotiator.encodings(['deflate', 'gzip'], ['gzip']), ['gzip', 'deflate'])
-      assert.deepEqual(this.negotiator.encodings(['gzip'], ['gzip']), ['gzip'])
+      assert.deepEqual(this.negotiator.encodings(['gzip', 'deflate'], { preferred: ['gzip'] }), ['gzip', 'deflate'])
+      assert.deepEqual(this.negotiator.encodings(['deflate', 'gzip'], { preferred: ['gzip'] }), ['gzip', 'deflate'])
+      assert.deepEqual(this.negotiator.encodings(['gzip'], { preferred: ['gzip'] }), ['gzip'])
     })
   })
 })
