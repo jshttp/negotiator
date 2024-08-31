@@ -1,6 +1,7 @@
 unreleased
 ==================
 
+  * Drop support for node <18
   * Added an option preferred encodings array #59
 
 0.6.3 / 2022-01-22
