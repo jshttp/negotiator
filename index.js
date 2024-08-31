@@ -44,12 +44,12 @@ Negotiator.prototype.charsets = function charsets(available) {
   return preferredCharsets(this.request.headers['accept-charset'], available);
 };
 
-Negotiator.prototype.encoding = function encoding(available, preferred) {
-  var set = this.encodings(available, preferred);
+Negotiator.prototype.encoding = function encoding(available, opts) {
+  var set = this.encodings(available, opts);
   return set && set[0];
 };
 
-Negotiator.prototype.encodings = function encodings(available, preferred) {
+Negotiator.prototype.encodings = function encodings(available, { preferred } = {}) {
   return preferredEncodings(this.request.headers['accept-encoding'], available, preferred);
 };
 
