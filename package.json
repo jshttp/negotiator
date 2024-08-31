@@ -1,7 +1,7 @@
 {
   "name": "negotiator",
   "description": "HTTP content negotiation",
-  "version": "0.6.3",
+  "version": "1.0.0",
   "contributors": [
     "Douglas Christopher Wilson <doug@somethingdoug.com>",
     "Federico Romero <federico.romero@outboxlabs.com>",
