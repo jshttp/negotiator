@@ -11,8 +11,14 @@ on:
     paths-ignore:
       - '*.md'
 
+permissions:
+  contents: read
+
 jobs:
   test:
+    permissions:
+      checks: write  # for coverallsapp/github-action to create new checks
+      contents: read  # for actions/checkout to fetch code
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -90,6 +96,8 @@ jobs:
         parallel: true
 
   coverage:
+    permissions:
+      checks: write  # for coverallsapp/github-action to create new checks
     needs: test
     runs-on: ubuntu-latest
     steps:
