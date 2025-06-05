@@ -1,4 +1,7 @@
-
+var nodeTest = require('node:test')
+var describe = nodeTest.describe
+var it = nodeTest.it
+var before = nodeTest.before
 var assert = require('assert')
 var Negotiator = require('..')
 
@@ -490,10 +493,12 @@ function whenAccept(accept, func) {
     : 'when Accept: ' + accept
 
   describe(description, function () {
+    var thisArg = {}
+
     before(function () {
-      this.negotiator = Negotiator(createRequest({'Accept': accept}))
+      thisArg.negotiator = Negotiator(createRequest({ 'Accept': accept }))
     })
 
-    func()
+    func.bind(thisArg)
   })
 }

@@ -1,4 +1,7 @@
-
+var nodeTest = require('node:test')
+var describe = nodeTest.describe
+var it = nodeTest.it
+var before = nodeTest.before
 var assert = require('assert')
 var Negotiator = require('..')
 
@@ -326,10 +329,12 @@ function whenAcceptCharset(acceptCharset, func) {
     : 'when Accept-Charset: ' + acceptCharset
 
   describe(description, function () {
+    var thisArg = {}
+
     before(function () {
-      this.negotiator = new Negotiator(createRequest({'Accept-Charset': acceptCharset}))
+      thisArg.negotiator = new Negotiator(createRequest({'Accept-Charset': acceptCharset}))
     })
 
-    func()
+    func.bind(thisArg)
   })
 }
