@@ -17,6 +17,10 @@
     "accept-charset"
   ],
   "repository": "jshttp/negotiator",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/express"
+  },
   "devDependencies": {
     "eslint": "7.32.0",
     "eslint-plugin-markdown": "2.2.1",
