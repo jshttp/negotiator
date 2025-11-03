@@ -1,4 +1,7 @@
-
+var nodeTest = require('node:test')
+var describe = nodeTest.describe
+var it = nodeTest.it
+var before = nodeTest.before
 var assert = require('assert')
 var Negotiator = require('..')
 
@@ -467,10 +470,12 @@ function whenAcceptEncoding(acceptEncoding, func) {
     : 'when Accept-Encoding: ' + acceptEncoding
 
   describe(description, function () {
+    var thisArg = {}
+
     before(function () {
-      this.negotiator = new Negotiator(createRequest({'Accept-Encoding': acceptEncoding}))
+      thisArg.negotiator = new Negotiator(createRequest({'Accept-Encoding': acceptEncoding}))
     })
 
-    func()
+    func.bind(thisArg)
   })
 }
