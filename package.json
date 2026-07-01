@@ -43,5 +43,9 @@
     "test:debug": "mocha --reporter spec --check-leaks --inspect --inspect-brk test/",
     "test-ci": "nyc --reporter=lcovonly --reporter=text npm test",
     "test-cov": "nyc --reporter=html --reporter=text npm test"
+  },
+  "homepage": "https://github.com/jshttp/negotiator",
+  "bugs": {
+    "url": "https://github.com/jshttp/negotiator/issues"
   }
 }
