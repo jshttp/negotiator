@@ -400,6 +400,43 @@ describe('negotiator.languages(array)', function () {
         ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl'])
     })
   })
+
+  // RFC 7231 sec 5.3.1 allows OWS after the ";"; charset/encoding already trim it.
+  whenAcceptLanguage('en;q=0.9, fr; q=0.1', function () {
+    it('should ignore whitespace after the semicolon', function () {
+      assert.deepEqual(this.negotiator.languages(['en', 'fr']), ['en', 'fr'])
+    })
+  })
+
+  whenAcceptLanguage('en;q=0.9, fr;\tq=0.1', function () {
+    it('should treat a tab as optional whitespace', function () {
+      assert.deepEqual(this.negotiator.languages(['en', 'fr']), ['en', 'fr'])
+    })
+  })
+
+  whenAcceptLanguage('fr; q=0', function () {
+    it('should honor an explicit q=0 rejection', function () {
+      assert.deepEqual(this.negotiator.languages(['fr']), [])
+    })
+  })
+
+  whenAcceptLanguage('fr;   q=0', function () {
+    it('should honor q=0 through repeated whitespace', function () {
+      assert.deepEqual(this.negotiator.languages(['fr']), [])
+    })
+  })
+
+  whenAcceptLanguage('en; q= 0.1, fr;q=0.5', function () {
+    it('should parse a q-value surrounded by whitespace', function () {
+      assert.deepEqual(this.negotiator.languages(['en', 'fr']), ['fr', 'en'])
+    })
+  })
+
+  it('should order a spaced header the same as an unspaced one', function () {
+    var spaced = new Negotiator(createRequest({'Accept-Language': 'en;q=0.9, fr; q=0.1'}))
+    var packed = new Negotiator(createRequest({'Accept-Language': 'en;q=0.9, fr;q=0.1'}))
+    assert.deepEqual(spaced.languages(['en', 'fr']), packed.languages(['en', 'fr']))
+  })
 })
 
 function createRequest(headers) {
