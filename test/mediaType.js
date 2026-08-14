@@ -181,6 +181,18 @@ describe('negotiator.mediaTypes()', function () {
     })
   })
 
+  whenAccept('text/html;p="\\"", application/json', function () {
+    it('should return text/html, application/json', function () {
+      assert.deepEqual(this.negotiator.mediaTypes(), ['text/html', 'application/json'])
+    })
+  })
+
+  whenAccept('text/html;p="a\\\\", application/json', function () {
+    it('should return text/html, application/json', function () {
+      assert.deepEqual(this.negotiator.mediaTypes(), ['text/html', 'application/json'])
+    })
+  })
+
   whenAccept('text/plain, application/json;q=0.5, text/html, */*;q=0.1', function () {
     it('should return text/plain, text/html, application/json, */*', function () {
       assert.deepEqual(this.negotiator.mediaTypes(), ['text/plain', 'text/html', 'application/json', '*/*'])
