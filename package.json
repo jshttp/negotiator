@@ -29,10 +29,7 @@
   },
   "files": [
     "lib/",
-    "HISTORY.md",
-    "LICENSE",
-    "index.js",
-    "README.md"
+    "index.js"
   ],
   "engines": {
     "node": ">=18"
