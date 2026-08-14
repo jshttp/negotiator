@@ -22,7 +22,7 @@
     "url": "https://opencollective.com/express"
   },
   "dependencies": {
-    "content-type": "2.1.0"
+    "content-type": "^2.1.0"
   },
   "devDependencies": {
     "eslint": "7.32.0",
