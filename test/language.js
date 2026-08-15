@@ -1,4 +1,7 @@
-
+var nodeTest = require('node:test')
+var describe = nodeTest.describe
+var it = nodeTest.it
+var before = nodeTest.before
 var assert = require('assert')
 var Negotiator = require('..')
 
@@ -422,10 +425,12 @@ function whenAcceptLanguage(acceptLanguage, func) {
     : 'when Accept-Language: ' + acceptLanguage
 
   describe(description, function () {
+    var thisArg = {}
+
     before(function () {
-      this.negotiator = new Negotiator(createRequest({'Accept-Language': acceptLanguage}))
+      thisArg.negotiator = new Negotiator(createRequest({'Accept-Language': acceptLanguage}))
     })
 
-    func()
+    func.bind(thisArg)
   })
 }
