@@ -29,7 +29,7 @@
     "eslint-plugin-markdown": "2.2.1",
     "mocha": "^11.7.0",
     "nyc": "^17.1.0",
-    "vitest": "3.2.4"
+    "vitest": "3.2.6"
   },
   "files": [
     "lib/",
