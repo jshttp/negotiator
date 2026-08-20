@@ -289,6 +289,12 @@ describe('negotiator.languages()', function () {
     })
   })
 
+  whenAcceptLanguage('en-US;foo="bar,baz", en-GB', function () {
+    it('should handle commas in quoted parameters', function () {
+      assert.deepEqual(this.negotiator.languages(), ['en-US', 'en-GB'])
+    })
+  })
+
   whenAcceptLanguage('nl;q=0.5, fr, de, en, it, es, pt, no, se, fi, ro', function () {
     it('should use prefer fr over nl', function () {
       assert.deepEqual(this.negotiator.languages(), ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl'])

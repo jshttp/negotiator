@@ -301,6 +301,12 @@ describe('negotiator.encodings()', function () {
     })
   })
 
+  whenAcceptEncoding('gzip;foo="bar,baz", deflate', function () {
+    it('should handle commas in quoted parameters', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['gzip', 'deflate', 'identity'])
+    })
+  })
+
   whenAcceptEncoding('gzip;q=0.8, identity;q=0.5, *;q=0.3', function () {
     it('should return client-preferred encodings', function () {
       assert.deepEqual(this.negotiator.encodings(), ['gzip', 'identity', '*'])

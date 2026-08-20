@@ -181,6 +181,12 @@ describe('negotiator.mediaTypes()', function () {
     })
   })
 
+  whenAccept('text/html;foo="bar\\\"", application/json', function () {
+    it('should handle escaped quotes', function () {
+      assert.deepEqual(this.negotiator.mediaTypes(), ['text/html', 'application/json'])
+    })
+  })
+
   whenAccept('text/plain, application/json;q=0.5, text/html, */*;q=0.1', function () {
     it('should return text/plain, text/html, application/json, */*', function () {
       assert.deepEqual(this.negotiator.mediaTypes(), ['text/plain', 'text/html', 'application/json', '*/*'])
@@ -387,13 +393,13 @@ describe('negotiator.mediaTypes(array)', function () {
   })
 
   whenAccept('text/html;LEVEL=1;level=2', function () {
-    it('should accept text/html;level=2', mediaTypesNegotiated(
-      ['text/html;level=2'],
-      ['text/html;level=2']
+    it('should accept the first parameter value', mediaTypesNegotiated(
+      ['text/html;level=1'],
+      ['text/html;level=1']
     ))
 
-    it('should not accept text/html;level=1', mediaTypesNegotiated(
-      ['text/html;level=1'],
+    it('should not accept the duplicate parameter value', mediaTypesNegotiated(
+      ['text/html;level=2'],
       []
     ))
   })
