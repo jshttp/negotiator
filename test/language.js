@@ -151,6 +151,14 @@ describe('negotiator.language(array)', function () {
     })
   })
 
+  whenAcceptLanguage('en-US', function () {
+    it('should match a more specific tag at a subtag boundary', function () {
+      assert.strictEqual(this.negotiator.language(['en-US-x']), 'en-US-x')
+      assert.strictEqual(this.negotiator.language(['en-USX']), undefined)
+      assert.strictEqual(this.negotiator.language(['en-GB']), undefined)
+    })
+  })
+
   whenAcceptLanguage('en;q=0', function () {
     it('should return undefined for empty list', function () {
       assert.strictEqual(this.negotiator.language([]), undefined)
