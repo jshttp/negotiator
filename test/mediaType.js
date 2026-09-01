@@ -244,6 +244,13 @@ describe('negotiator.mediaTypes(array)', function () {
     ))
   })
 
+  whenAccept('application/json;charset=utf-8', function () {
+    it('should accept application/json', mediaTypesNegotiated(
+      ['application/json'],
+      ['application/json']
+    ))
+  })
+
   whenAccept('application/json;q=0', function () {
     it('should not accept application/json', mediaTypesNegotiated(
       ['application/json'],
