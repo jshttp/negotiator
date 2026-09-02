@@ -157,6 +157,12 @@ describe('negotiator.mediaTypes()', function () {
     })
   })
 
+  whenAccept('İ/html, text/plain', function () {
+    it('should not corrupt the type when lower-casing changes its length', function () {
+      assert.deepEqual(this.negotiator.mediaTypes(), ['İ/html', 'text/plain'])
+    })
+  })
+
   whenAccept('text/*', function () {
     it('should return text/*', function () {
       assert.deepEqual(this.negotiator.mediaTypes(), ['text/*'])
