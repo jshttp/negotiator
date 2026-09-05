@@ -251,6 +251,18 @@ describe('negotiator.mediaTypes(array)', function () {
     ))
   })
 
+  whenAccept('text/plain;charset=utf-8', function () {
+    it('should reject a conflicting charset on the provided type', mediaTypesNegotiated(
+      ['text/plain;charset=iso-8859-1'],
+      []
+    ))
+
+    it('should accept the same charset on the provided type', mediaTypesNegotiated(
+      ['text/plain;charset=utf-8'],
+      ['text/plain;charset=utf-8']
+    ))
+  })
+
   whenAccept('application/json;q=0', function () {
     it('should not accept application/json', mediaTypesNegotiated(
       ['application/json'],
