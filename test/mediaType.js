@@ -368,6 +368,30 @@ describe('negotiator.mediaTypes(array)', function () {
     ))
   })
 
+  whenAccept('text/html;q=0.5;level=1', function () {
+    it('should accept text/html', mediaTypesNegotiated(
+      ['text/html'],
+      ['text/html']
+    ))
+
+    it('should not require the accept extension on the provided type', mediaTypesNegotiated(
+      ['text/html;level=1'],
+      ['text/html;level=1']
+    ))
+
+    it('should accept text/html;level=2', mediaTypesNegotiated(
+      ['text/html;level=2'],
+      ['text/html;level=2']
+    ))
+  })
+
+  whenAccept('text/html;q=1;level=2, text/html;level=1', function () {
+    it('should prefer text/html;level=1 over text/html;level=2', mediaTypesNegotiated(
+      ['text/html;level=2', 'text/html;level=1'],
+      ['text/html;level=1', 'text/html;level=2']
+    ))
+  })
+
   whenAccept('text/html;foo=";level=2;"', function () {
     it('should not accept text/html;level=2', mediaTypesNegotiated(
       ['text/html;level=2'],
