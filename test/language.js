@@ -208,6 +208,35 @@ describe('negotiator.language(array)', function () {
       assert.strictEqual(this.negotiator.language(['nl', 'fr']), 'fr')
     })
   })
+
+  whenAcceptLanguage('zh, zh-CN;q=0.9', function () {
+    it('should prefer specifically listed zh-CN over prefix-only zh-TW', function () {
+      assert.strictEqual(this.negotiator.language(['zh-CN', 'zh-TW']), 'zh-CN')
+    })
+
+    it('should keep server order when both only share the prefix quality', function () {
+      assert.strictEqual(this.negotiator.language(['zh-TW', 'zh-CN']), 'zh-TW')
+    })
+  })
+
+  whenAcceptLanguage('en, en-US;q=0.8', function () {
+    it('should prefer specifically listed en-US over prefix-only en-GB', function () {
+      assert.strictEqual(this.negotiator.language(['en-US', 'en-GB']), 'en-US')
+    })
+  })
+
+  whenAcceptLanguage('en, fr;q=0.9', function () {
+    it('should still prefer a prefix of the higher-q language', function () {
+      assert.strictEqual(this.negotiator.language(['en-US', 'fr']), 'en-US')
+    })
+  })
+
+  whenAcceptLanguage('en, en-US;q=0', function () {
+    it('should exclude the more specific q=0 language', function () {
+      assert.strictEqual(this.negotiator.language(['en-US']), undefined)
+      assert.strictEqual(this.negotiator.language(['en-US', 'en-GB']), 'en-GB')
+    })
+  })
 })
 
 describe('negotiator.languages()', function () {
@@ -404,6 +433,17 @@ describe('negotiator.languages(array)', function () {
     it('should return preferred languages', function () {
       assert.deepEqual(this.negotiator.languages(['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl']),
         ['fr', 'de', 'en', 'it', 'es', 'pt', 'no', 'se', 'fi', 'ro', 'nl'])
+    })
+  })
+
+  whenAcceptLanguage('zh, zh-CN;q=0.9', function () {
+    it('should not let the zh prefix elevate zh-TW over zh-CN', function () {
+      assert.deepEqual(this.negotiator.languages(['zh-CN', 'zh-TW']), ['zh-CN', 'zh-TW'])
+    })
+
+    it('should keep server order when both only share the prefix quality', function () {
+      assert.deepEqual(this.negotiator.languages(['zh-HK', 'zh-CN']), ['zh-HK', 'zh-CN'])
+      assert.deepEqual(this.negotiator.languages(['zh-CN', 'zh-HK']), ['zh-CN', 'zh-HK'])
     })
   })
 })
