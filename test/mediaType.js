@@ -50,6 +50,12 @@ describe('negotiator.mediaType()', function () {
       assert.strictEqual(this.negotiator.mediaType(), 'text/plain')
     })
   })
+
+  whenAccept('application/ld+json;profile=http://www.w3.org/ns/json-ld#expanded', function () {
+    it('should return application/ld+json', function () {
+      assert.strictEqual(this.negotiator.mediaType(), 'application/ld+json')
+    })
+  })
 })
 
 describe('negotiator.mediaType(array)', function () {
@@ -124,6 +130,26 @@ describe('negotiator.mediaType(array)', function () {
         'text/plain')
     })
   })
+
+  whenAccept('application/ld+json;profile=http://www.w3.org/ns/json-ld#expanded', function () {
+    it('should accept application/ld+json', function () {
+      assert.strictEqual(this.negotiator.mediaType(['application/ld+json']), 'application/ld+json')
+    })
+
+    it('should accept application/ld+json among other types', function () {
+      assert.strictEqual(this.negotiator.mediaType(['text/html', 'application/ld+json']), 'application/ld+json')
+    })
+
+    it('should reject an unrelated type', function () {
+      assert.strictEqual(this.negotiator.mediaType(['application/json']), undefined)
+    })
+  })
+
+  whenAccept('application/ld+json;profile="http://www.w3.org/ns/json-ld#expanded"', function () {
+    it('should accept application/ld+json when the profile is quoted', function () {
+      assert.strictEqual(this.negotiator.mediaType(['application/ld+json']), 'application/ld+json')
+    })
+  })
 })
 
 describe('negotiator.mediaTypes()', function () {
@@ -172,6 +198,18 @@ describe('negotiator.mediaTypes()', function () {
   whenAccept('text/html;LEVEL=1', function () {
     it('should return text/html;LEVEL=1', function () {
       assert.deepEqual(this.negotiator.mediaTypes(), ['text/html'])
+    })
+  })
+
+  whenAccept('application/ld+json;profile=http://www.w3.org/ns/json-ld#expanded', function () {
+    it('should return application/ld+json', function () {
+      assert.deepEqual(this.negotiator.mediaTypes(), ['application/ld+json'])
+    })
+  })
+
+  whenAccept('application/ld+json;profile=http://www.w3.org/ns/json-ld#expanded, application/n-quads', function () {
+    it('should return application/ld+json, application/n-quads', function () {
+      assert.deepEqual(this.negotiator.mediaTypes(), ['application/ld+json', 'application/n-quads'])
     })
   })
 
@@ -281,6 +319,62 @@ describe('negotiator.mediaTypes(array)', function () {
     it('should accept application/xhtml+xml;profile="http://www.wapforum.org/xhtml"', mediaTypesNegotiated(
       ['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"'],
       ['application/xhtml+xml;profile="http://www.wapforum.org/xhtml"']
+    ))
+
+    it('should accept application/xhtml+xml without a profile', mediaTypesNegotiated(
+      ['application/xhtml+xml'],
+      ['application/xhtml+xml']
+    ))
+  })
+
+  whenAccept('application/ld+json;profile=http://www.w3.org/ns/json-ld#expanded', function () {
+    it('should accept application/ld+json', mediaTypesNegotiated(
+      ['application/ld+json'],
+      ['application/ld+json']
+    ))
+
+    it('should accept the same profile on the provided type', mediaTypesNegotiated(
+      ['application/ld+json;profile=http://www.w3.org/ns/json-ld#expanded'],
+      ['application/ld+json;profile=http://www.w3.org/ns/json-ld#expanded']
+    ))
+
+    it('should accept the same profile when the provided type quotes it', mediaTypesNegotiated(
+      ['application/ld+json;profile="http://www.w3.org/ns/json-ld#expanded"'],
+      ['application/ld+json;profile="http://www.w3.org/ns/json-ld#expanded"']
+    ))
+
+    it('should reject a conflicting profile on the provided type', mediaTypesNegotiated(
+      ['application/ld+json;profile=http://www.w3.org/ns/json-ld#compacted'],
+      []
+    ))
+
+    it('should not accept an unrelated type', mediaTypesNegotiated(
+      ['application/json', 'text/html'],
+      []
+    ))
+  })
+
+  whenAccept('application/ld+json;profile="http://www.w3.org/ns/json-ld#expanded"', function () {
+    it('should accept application/ld+json when the profile is quoted', mediaTypesNegotiated(
+      ['application/ld+json'],
+      ['application/ld+json']
+    ))
+  })
+
+  whenAccept('application/ld+json;profile=http://www.w3.org/ns/json-ld#expanded, application/n-quads', function () {
+    it('should accept application/ld+json', mediaTypesNegotiated(
+      ['application/ld+json'],
+      ['application/ld+json']
+    ))
+
+    it('should accept application/n-quads', mediaTypesNegotiated(
+      ['application/n-quads'],
+      ['application/n-quads']
+    ))
+
+    it('should prefer application/ld+json over application/n-quads', mediaTypesNegotiated(
+      ['application/n-quads', 'application/ld+json'],
+      ['application/ld+json', 'application/n-quads']
     ))
   })
 
