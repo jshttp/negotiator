@@ -439,6 +439,54 @@ describe('negotiator.encodings(array)', function () {
     })
   })
 
+  whenAcceptEncoding('gzip, br', function () {
+    it('should match preferred encodings regardless of provided casing', function () {
+      assert.deepEqual(this.negotiator.encodings(['GZIP', 'BR'], { preferred: ['br'] }), ['BR', 'GZIP'])
+    })
+
+    it('should match preferred encodings regardless of preferred casing', function () {
+      assert.deepEqual(this.negotiator.encodings(['gzip', 'br'], { preferred: ['BR'] }), ['br', 'gzip'])
+    })
+
+    it('should preserve preferred order and caller arrays with mixed casing', function () {
+      var available = Object.freeze(['GZIP', 'BR'])
+      var preferred = Object.freeze(['BR', 'gZip'])
+      assert.deepEqual(this.negotiator.encodings(available, { preferred: preferred }), ['BR', 'GZIP'])
+      assert.strictEqual(this.negotiator.encoding(available, { preferred: preferred }), 'BR')
+      assert.deepEqual(available, ['GZIP', 'BR'])
+      assert.deepEqual(preferred, ['BR', 'gZip'])
+    })
+
+    it('should preserve client order for unmatched preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(['GZIP', 'BR'], { preferred: ['ZSTD'] }), ['GZIP', 'BR'])
+    })
+  })
+
+  whenAcceptEncoding('gzip, br;q=0.5', function () {
+    it('should prioritize quality over mixed-case preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(['GZIP', 'BR'], { preferred: ['BR'] }), ['GZIP', 'BR'])
+    })
+  })
+
+  whenAcceptEncoding('gzip, br;q=0', function () {
+    it('should exclude rejected mixed-case preferred encodings', function () {
+      assert.deepEqual(this.negotiator.encodings(['GZIP', 'BR'], { preferred: ['BR'] }), ['GZIP'])
+      assert.deepEqual(this.negotiator.encodings(['GZIP', 'BR', 'IDENTITY'], { preferred: ['br', 'identity'] }), ['IDENTITY', 'GZIP'])
+    })
+  })
+
+  whenAcceptEncoding('GZIP, BR', function () {
+    it('should apply preferred order without an available encodings list', function () {
+      assert.deepEqual(this.negotiator.encodings(undefined, { preferred: ['br'] }), ['BR', 'GZIP', 'identity'])
+    })
+  })
+
+  whenAcceptEncoding('gzip, br;q=0, identity;q=0', function () {
+    it('should preserve explicit identity rejection with mixed-case preference', function () {
+      assert.deepEqual(this.negotiator.encodings(['GZIP', 'BR', 'IDENTITY'], { preferred: ['BR', 'IDENTITY'] }), ['GZIP'])
+    })
+  })
+
   whenAcceptEncoding('gzip;q=0.8, identity;q=0.5, *;q=0.3', function () {
     it('should return client-preferred encodings', function () {
       assert.deepEqual(this.negotiator.encodings(['gzip']), ['gzip'])
