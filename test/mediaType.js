@@ -53,6 +53,19 @@ describe('negotiator.mediaType()', function () {
 })
 
 describe('negotiator.mediaType(array)', function () {
+  whenAccept('application/json, application/xml, application/json', function () {
+    it('should preserve the first preference when a media type is repeated', function () {
+      assert.strictEqual(this.negotiator.mediaType(['application/xml', 'application/json']), 'application/json')
+      assert.deepEqual(this.negotiator.mediaTypes(['application/xml', 'application/json']), ['application/json', 'application/xml'])
+    })
+  })
+
+  whenAccept('application/json;q=0.5, application/xml;q=0.8, application/json;q=0.9', function () {
+    it('should still use the highest quality for a repeated media type', function () {
+      assert.strictEqual(this.negotiator.mediaType(['application/xml', 'application/json']), 'application/json')
+    })
+  })
+
   whenAccept(undefined, function () {
     it('should return first item in list', function () {
       assert.strictEqual(this.negotiator.mediaType(['text/html']), 'text/html')
