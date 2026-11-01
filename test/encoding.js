@@ -80,6 +80,17 @@ describe('negotiator.encoding()', function () {
       assert.strictEqual(this.negotiator.encoding(), 'gzip')
     })
   })
+  whenAcceptEncoding('a\tb', function () {
+    it('should ignore encoding containing a tab', function () {
+      assert.deepStrictEqual(this.negotiator.encodings(), ['identity'])
+    })
+  })
+
+  whenAcceptEncoding('gzip, a\rb', function () {
+    it('should ignore encoding containing a CR', function () {
+      assert.deepStrictEqual(this.negotiator.encodings(), ['gzip', 'identity'])
+    })
+  })
 })
 
 describe('negotiator.encoding(array)', function () {
