@@ -198,6 +198,23 @@ describe('negotiator.mediaTypes()', function () {
       assert.deepEqual(this.negotiator.mediaTypes(), ['text/plain', 'text/html', 'text/xml', 'text/yaml', 'text/javascript', 'text/csv', 'text/css', 'text/rtf', 'text/markdown', 'application/json', 'application/octet-stream', '*/*'])
     })
   })
+  whenAccept('a\tb/c', function () {
+    it('should ignore media type containing a tab', function () {
+      assert.deepStrictEqual(this.negotiator.mediaTypes(), [])
+    })
+  })
+
+  whenAccept('text/html, :\t/0', function () {
+    it('should ignore invalid media type', function () {
+      assert.deepStrictEqual(this.negotiator.mediaTypes(), ['text/html'])
+    })
+  })
+
+  whenAccept('a\rb/b', function () {
+    it('should ignore media type containing a CR', function () {
+      assert.deepStrictEqual(this.negotiator.mediaTypes(), [])
+    })
+  })
 })
 
 describe('negotiator.mediaTypes(array)', function () {
