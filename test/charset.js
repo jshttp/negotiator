@@ -56,6 +56,23 @@ describe('negotiator.charset()', function () {
       assert.strictEqual(this.negotiator.charset(), 'UTF-8')
     })
   })
+  whenAcceptCharset('a\tb', function () {
+    it('should ignore charset containing a tab', function () {
+      assert.deepStrictEqual(this.negotiator.charsets(), [])
+    })
+  })
+
+  whenAcceptCharset('a\rb', function () {
+    it('should ignore charset containing a CR', function () {
+      assert.deepStrictEqual(this.negotiator.charsets(), [])
+    })
+  })
+
+  whenAcceptCharset('UTF-8, :\t/0', function () {
+    it('should ignore invalid charset', function () {
+      assert.deepStrictEqual(this.negotiator.charsets(), ['UTF-8'])
+    })
+  })
 })
 
 describe('negotiator.charset(array)', function () {

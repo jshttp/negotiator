@@ -80,6 +80,17 @@ describe('negotiator.language()', function () {
       assert.strictEqual(this.negotiator.language(), 'fr')
     })
   })
+  whenAcceptLanguage('a\tb', function () {
+    it('should ignore language containing a tab', function () {
+      assert.deepStrictEqual(this.negotiator.languages(), [])
+    })
+  })
+
+  whenAcceptLanguage('en, a\rb', function () {
+    it('should ignore language containing a CR', function () {
+      assert.deepStrictEqual(this.negotiator.languages(), ['en'])
+    })
+  })
 })
 
 describe('negotiator.language(array)', function () {
