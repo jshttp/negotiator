@@ -4,8 +4,8 @@ var Negotiator = require('..')
 
 describe('negotiator.encoding()', function () {
   whenAcceptEncoding(undefined, function () {
-    it('should return identity', function () {
-      assert.strictEqual(this.negotiator.encoding(), 'identity')
+    it('should return *', function () {
+      assert.strictEqual(this.negotiator.encoding(), '*')
     })
   })
 
@@ -88,9 +88,9 @@ describe('negotiator.encoding(array)', function () {
       assert.strictEqual(this.negotiator.encoding([]), undefined)
     })
 
-    it('should only match identity', function () {
+    it('should match any provided encoding', function () {
       assert.strictEqual(this.negotiator.encoding(['identity']), 'identity')
-      assert.strictEqual(this.negotiator.encoding(['gzip']), undefined)
+      assert.strictEqual(this.negotiator.encoding(['gzip']), 'gzip')
     })
   })
 
@@ -224,8 +224,8 @@ describe('negotiator.encoding(array)', function () {
 
 describe('negotiator.encodings()', function () {
   whenAcceptEncoding(undefined, function () {
-    it('should return identity', function () {
-      assert.deepEqual(this.negotiator.encodings(), ['identity'])
+    it('should return *', function () {
+      assert.deepEqual(this.negotiator.encodings(), ['*'])
     })
   })
 
@@ -320,9 +320,9 @@ describe('negotiator.encodings(array)', function () {
       assert.deepEqual(this.negotiator.encodings([]), [])
     })
 
-    it('should only match identity', function () {
+    it('should match any provided encoding', function () {
       assert.deepEqual(this.negotiator.encodings(['identity']), ['identity'])
-      assert.deepEqual(this.negotiator.encodings(['gzip']), [])
+      assert.deepEqual(this.negotiator.encodings(['gzip']), ['gzip'])
     })
   })
 
